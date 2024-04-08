@@ -10,6 +10,6 @@ RUN mvn package -DskipTests
 # Stage 2: Run
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY --from=build /app/target/Lab2_Jv5-0.0.1-SNAPSHOT.jar Lab2_Jv5.jar
+COPY --from=build /app/target/GOD-0.0.1-SNAPSHOT.jar God.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "Lab2_Jv5.jar"]
+ENTRYPOINT ["java", "-jar", "GOD.jar"]
