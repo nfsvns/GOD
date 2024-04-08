@@ -44,8 +44,6 @@ import com.poly.service.MailerService;
 import com.poly.service.OrderService;
 import com.poly.service.SessionService;
 
-import lombok.var;
-
 @Controller
 public class OrderController {
 	@Autowired
