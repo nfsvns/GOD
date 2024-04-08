@@ -1,0 +1,399 @@
+<!-- Navbar -->
+<nav
+	class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl "
+	id="navbarBlur" data-scroll="false">
+	<div class="container-fluid py-1 px-3">
+		<nav aria-label="breadcrumb">
+			<ol
+				class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+				<li class="breadcrumb-item text-sm"><a
+					class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+				<li class="breadcrumb-item text-sm text-white active"
+					aria-current="page">History</li>
+			</ol>
+			<h6 class="font-weight-bolder text-white mb-0">History</h6>
+		</nav>
+		<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+			id="navbar">
+			<div
+				class="ms-md-auto w-30 pe-md-3 d-flex flex-column align-items-center">
+				<div class="input-group">
+					<input type="text" style="border-radius: 10px;"
+						class="form-control" placeholder="Search order id or user"
+						ng-model="searchText" ng-keyup="filterBySearch()">
+				</div>
+
+				<!-- Suggestions Section -->
+
+
+				<!-- Suggestions Section -->
+
+
+			</div>
+
+			<ul class="navbar-nav  justify-content-end">
+
+
+				<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+					<a href="javascript:;" class="nav-link text-white p-0"
+					id="iconNavbarSidenav">
+						<div class="sidenav-toggler-inner">
+							<i class="sidenav-toggler-line bg-white"></i> <i
+								class="sidenav-toggler-line bg-white"></i> <i
+								class="sidenav-toggler-line bg-white"></i>
+						</div>
+				</a>
+				</li>
+				<li class="nav-item px-3 d-flex align-items-center"><a
+					href="javascript:;" class="nav-link text-white p-0"> <i
+						class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+				</a></li>
+				<li class="nav-item dropdown pe-2 d-flex align-items-center">
+					<!-- Update your bell icon to include the red dot when there are new notifications -->
+					<a href="javascript:;" class="nav-link text-white p-0"
+					id="dropdownMenuButton" data-bs-toggle="dropdown"
+					aria-expanded="false"> <i class="fa fa-bell cursor-pointer"></i>
+						<span ng-show="showNotification" class="notification-dot"></span>
+				</a> <!-- Add a new element to display the list of notifications -->
+					<div ng-show="showNotification" class="notification-list">
+						<ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
+							aria-labelledby="dropdownMenuButton">
+							<li ng-repeat="notification in notificationList" class="mb-2">
+								<a class="dropdown-item border-radius-md" href="javascript:;">
+									<div class="d-flex py-1">
+										<!-- Customize the content based on your notification structure -->
+										<div class="my-auto">
+											<!-- Display your notification content here -->
+										</div>
+										<div class="d-flex flex-column justify-content-center">
+											<h6 class="text-sm font-weight-normal mb-1">{{
+												notification.message }}</h6>
+											<p class="text-xs text-secondary mb-0">
+												<i class="fa fa-clock me-1"></i> {{ notification.timestamp |
+												date: 'medium' }}
+											</p>
+										</div>
+									</div>
+							</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+	<div class="row">
+		<div class="col-12">
+			<div class="card mb-4">
+				<div class="card-header pb-0">
+					<h6>History Edit</h6>
+				</div>
+				<div class="card-body px-0 pt-0 pb-2">
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="row container text-x font-weight-bolder">
+								<div class="col-sm-12">
+									<div class="row ">
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Username</div>
+											<input ng-model="form.account.username" class="form-control"
+												disabled="disabled">
+										</div>
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Date</div>
+											<input ng-model="form.createDate" class="form-control"
+												disabled="disabled">
+										</div>
+									</div>
+									<div class="row">
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Address</div>
+											<input ng-model="form.address" class="form-control"
+												disabled="disabled">
+										</div>
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>To</div>
+											<input ng-model="form.nguoinhan" class="form-control"
+												disabled="disabled">
+										</div>
+									</div>
+									<div class="row">
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Total</div>
+											<input ng-model="form.tongtien" type="text"
+												class="form-control" disabled="disabled">
+										</div>
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Phone</div>
+											<input ng-model="form.phone" type="text"
+												class="form-control" disabled="disabled">
+										</div>
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Payment orders?</div>
+											<div class="form-control">
+												<label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.available" ng-value="true"
+													name="available" type="radio">Paid
+												</label> <label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.available" ng-value="false"
+													name="available" type="radio">Unpaid
+												</label>
+											</div>
+										</div>
+										<div
+											class="form-group col-sm-6 text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+											<div>Status?</div>
+											<div class="form-control">
+												<label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.status" ng-value="'Đang Giao'"
+													name="status" type="radio">Delivered
+												</label> <label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.status" ng-value="'Đang Xác Nhận'"
+													name="status" type="radio">Wait Confirm
+												</label> <label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.status" ng-value="'Đã Giao'"
+													name="status" type="radio">Completed
+												</label> <label
+													class="radio-inline text-uppercase text-secondary text-xxs font-weight-bolder">
+													<input ng-model="form.status" ng-value="'Đã Hủy'"
+													name="status" type="radio">Canceled
+												</label>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+
+
+
+								<div class="panel-footer text-center">
+									<button ng-click="create()" ng-disabled="form.id"
+										class="btn btn-primary">
+										<b class="glyphicon glyphicon-plus"></b> Create
+									</button>
+									<button ng-click="update()" ng-disabled="!form.id"
+										class="btn btn-success">
+										<b class="glyphicon glyphicon-save"></b> Update
+									</button>
+									<button ng-click="delete(form)"
+										ng-if="form.status == 'Đang Giao' || form.status=='Đang Xác Nhận' && !form.available"
+										class="btn btn-danger">
+										<b class="glyphicon glyphicon-trash"></b> Delete
+									</button>
+									<button ng-click="reset()" class="btn btn-info">
+										<b class="glyphicon glyphicon-refresh"></b> Reset
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="card mb-4">
+			<div class="card-header pb-0">
+				<h6>List of History</h6>
+				<i class="fas fa-calendar" id="calendar" ng-model="selectedDate"></i>
+				<input type="text" ng-model="selectedDate" style="border: none"
+					disabled="true" placeholder="Select a date">
+				<!-- Add this HTML code within the <nav> tag or wherever you want the filter dropdown -->
+				<button class="btn btn-info btn-sm" ng-click="refreshPage()">Refresh</button>
+			</div>
+			<div class="card-body px-0 pt-0 pb-2 w-100">
+				<div class="table-responsive p-0">
+					<table class="table align-items-center justify-content-center mb-0">
+						<thead>
+							<tr>
+								
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">
+									Email</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">
+									Create Date</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Address</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									To</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Total</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Phone</th>
+									<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Discount Code</th>
+
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Status</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Payment</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Show Detail</th>
+								<th
+									class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">
+									Action</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody class="text-xs font-weight-bolder text-center ">
+							<tr ng-repeat="item in pagedItems">
+								<td>{{item.account.email}}</td>
+								<td>{{item.createDate | date:'dd/MM/yyyy'}}</td>
+								<td class="text-truncate" style="max-width: 200px">
+									{{item.address}}</td>
+								<td>{{item.nguoinhan}}</td>
+								<td>{{item.tongtien}}</td>
+								<td>{{item.phone}}</td>
+								<td>{{item.discountCode.id ? item.discountCode.code : 'No discount'}}</td>
+								<td
+									ng-class="{'btn-show': item.status == 'Đã Giao', 'btn-hide': item.status == 'Đang Giao','btn-cancel': item.status == 'Đã Hủy'}">
+									<span ng-if="item.status == 'Đang Xác Nhận'">Chờ xác
+										nhận</span> <span ng-if="item.status == 'Đã Hủy'">Đã hủy</span> <span
+									ng-if="item.status == 'Đã Giao'">Đã hoàn thành</span> <span
+									ng-if="item.status == 'Đang Giao'">Đang giao hàng</span>
+								</td>
+
+								<td
+									ng-class="{'btn-show':item.available,'btn-cancel':!item.available}">{{item.available?'Đã
+									thanh toán':'Chưa thanh toán'}}</td>
+								<td><button ng-click="getDetailData(item)"
+										class="btn btn-primary">{{item.showDetail ? 'Hide' :
+										'Show'}}</button></td>
+								<td>
+									<div class="btn-group btn-group-xs">
+										<a ng-click="edit(item)" href="" class="btn btn-warning"
+											ng-if="!item.available && item.status == 'Đã Giao'||item.status == 'Đang Giao' || item.status == 'Đang Xác Nhận' ">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+									</div>
+
+
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="panel-footer text-center">
+						<button ng-click="pager.first()" class="btn" style="width: 60px;">
+							<i class="fa-solid fa-backward-step"></i>
+						</button>
+						<button ng-click="pager.prev()" class="btn" style="width: 60px;">
+							<i class="fa-solid fa-backward"></i>
+						</button>
+						<button class="btn btn-success">{{currentPage + 1}} of
+							{{pager.count}}</button>
+						<button ng-click="pager.next()" class="btn" style="width: 60px;">
+							<i class="fa-solid fa-forward"></i>
+						</button>
+						<button ng-click="pager.last()" class="btn" style="width: 60px;">
+							<i class="fa-solid fa-forward-step"></i>
+						</button>
+					</div>
+
+
+
+					<div ng-repeat="item in pagedItems">
+						<div class="fixed-top">
+							<table class="table table-condensed detail-table"
+								ng-show="item.showDetail">
+								<thead class="bg-danger"
+									style="color: aliceblue; font-variant: small-caps;">
+									<th>Id</th>
+									<th>Order id</th>
+									<th>size</th>
+									<th>Name</th>
+									<th>Price</th>
+									<th>Quantity</th>
+								</thead>
+								<tbody class="bg-dark" style="color: aliceblue;">
+									<tr ng-repeat="detailItem in item.detailData">
+										<td>{{detailItem.id}}</td>
+										<td>{{detailItem.order.id}}</td>
+										<td>{{detailItem.size}}</td>
+										<td class="text-truncate">{{detailItem.product.name}}</td>
+										<td>{{detailItem.price}}</td>
+										<td>{{detailItem.quantity}}</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+
+
+
+
+						</div>
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer class="footer pt-3  ">
+	<div class="container-fluid">
+		<div class="row align-items-center justify-content-lg-between">
+			<div class="col-lg-6 mb-lg-0 mb-4">
+				<div class="copyright text-center text-sm text-muted text-lg-start">
+					©
+					<script>
+						document.write(new Date().getFullYear())
+					</script>
+					, made with <i class="fa fa-heart"></i> by <a
+						href="https://www.creative-tim.com" class="font-weight-bold"
+						target="_blank">Creative Tim</a> for a better web.
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<ul
+					class="nav nav-footer justify-content-center justify-content-lg-end">
+					<li class="nav-item"><a href="https://www.creative-tim.com"
+						class="nav-link text-muted" target="_blank">Creative Tim</a></li>
+					<li class="nav-item"><a
+						href="https://www.creative-tim.com/presentation"
+						class="nav-link text-muted" target="_blank">About Us</a></li>
+					<li class="nav-item"><a
+						href="https://www.creative-tim.com/blog"
+						class="nav-link text-muted" target="_blank">Blog</a></li>
+					<li class="nav-item"><a
+						href="https://www.creative-tim.com/license"
+						class="nav-link pe-0 text-muted" target="_blank">License</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>

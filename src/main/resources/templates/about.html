@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+<head>
+<title>Shoe Galaxy</title>
+<meta charset="utf-8">
+</head>
+
+<body>
+ 
+	<section class="py-5" data-aos="fade">
+		
+
+		<div class="container mt-5" data-aos="fade">
+			<div class="row">
+				<div class="col-md-6 mt-5">
+					<h2 class="mt-5">Về chúng tôi</h2>
+					<br>
+					<p style="font-size:120%;">- Hội nhóm The Godfather được thành lập vào năm
+						2021 với những thành viên đầy nhiệt huyết và quyết tâm truyền tải
+						thông điệp mang nhiều ý nghĩa nhân sinh quan sâu sắc mà tác phẩm
+						kinh điển The Godfather để lại. Tôn Trọng – Tích Cực – Phát Triển
+						là ba tiêu chí hàng đầu khi đội ngũ xây dựng hội nhóm và định hình
+						vị trí trong tâm trí của cộng đồng.</p>
+					<p style="font-size:120%;">- Hội nhóm Bố Già - The Godfather Group in Vietnam là cộng
+						đồng lớn nhất và được ủng hộ nhiều nhất trên mạng xã hội. Nhắc đến
+						The Godfather, mọi người không chỉ đề cập về Mafia mà còn về ý
+						nghĩa gia đình, bạn bè và xã hội. Những quan tâm này là những điều
+						luôn khiến con người suy ngẫm và nghĩ về qua từng độ tuổi và từng
+						trải nghiệm trong cuộc sống.</p>
+				</div>
+				<div class="col-md-6 px-5">
+					<img th:src="@{../../image/logo.png}" alt="Image placeholder" style="border-radius: 1000px"
+						class="img-fluid ">
+
+				</div>
+			</div>
+			<div class="row mt-5">
+			<h2 class="mt-5">Giao lưu & Gặp gỡ</h2>
+			<div class="col-md-12 container mt-5">
+			<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+<!--   <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div> -->
+  <div class="carousel-inner" style="border-radius: 20px">
+    <div class="carousel-item active">
+      <img src="../../image/hinh1.jpg" class="d-block h-50" alt="Slide 1" width="100%">
+    </div>
+    <div class="carousel-item">
+      <img src="../../image/hinh2.jpg" class="d-block " alt="Slide 2"  width="100%">
+    </div>
+    <div class="carousel-item">
+      <img src="../../image/hinh3.jpg" class="d-block" alt="Slide 3"  width="100%">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+			
+			</div>
+			</div>
+
+		</div>
+	</section>
+</body>
+</html>

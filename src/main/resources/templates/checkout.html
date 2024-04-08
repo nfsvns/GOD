@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  encoding="UTF-8"
+>
+  <head>
+    <title>God Father</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body class="be-vietnam">
+    <div class="site-section">
+      <div class="container">
+        <div th:if="${messages != null}" class="alert alert-danger">
+          <p th:text="${messages}"></p>
+        </div>
+        <form action="/checkout.html" method="post">
+          <div class="row">
+            <div class="col-md-6 mb-5 mb-md-0">
+              <h2 class="h3 mb-3 text-black">Đơn hàng của bạn</h2>
+
+              <div class="p-5 p-lg-5 border">
+                <table class="table site-block-order-table">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Hình ảnh</th>
+                      <th>Kích thước</th>
+                      <th>Giá</th>
+                      <th>Số lượng</th>
+                      <th>Tổng cộng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      ng-repeat="item in cart.items | filter : { status: true }"
+                    >
+                      <td>
+                        <input
+                          ng-model="item.product.id"
+                          type="text"
+                          name="productId"
+                          style="width: 50%; border: none; outline: none"
+                        />
+                      </td>
+                      <td>
+                        <img
+                          style="width: 50%; border: none; outline: none"
+                          src="/images/{{item.image}}"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          ng-model="item.size"
+                          type="text"
+                          name="sizeId"
+                          style="width: 100%; border: none; outline: none"
+                        /><br />
+                      </td>
+                      <td>${{cart.price_product(item)}}</td>
+                      <td>
+                        <input
+                          ng-change="cart.updateQtyDatabase(item.id,  item.qty)"
+                          name="countProduct"
+                          ng-model="item.qty"
+                          type="number"
+                          min="1"
+                          style="width: 50px"
+                          class="border border-light"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="priceTotal"
+                          style="width: 100%; border: none"
+                          value="{{cart.amtt_of(item)}}"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-black font-weight-bold">
+                        <strong>Tổng đơn hàng</strong>
+                      </td>
+                      <td>
+                        <input
+                          name="initialPrice"
+                          class="text-black font-weight-bold border border-light"
+                          type="text"
+                          value="{{cart.amount}}"
+                        />
+                        <th:block th:if="${calculatedValue != null}">
+                          <input
+                            name="discountPrice"
+                            type="text"
+                            class="text-black font-weight-bold border border-light"
+                            th:value="{#numbers.formatDecimal( '- ' + ' '+ discountPrice, 2, 'COMMA', 2, 'POINT')}"
+                          />
+                        </th:block>
+                        <th:block th:if="${calculatedValue != null}">
+                          <input
+                            type="text"
+                            class="text-danger font-weight-bold border border-light"
+                            th:value="${calculatedValue}"
+                            readonly="readonly"
+                          />
+                        </th:block>
+                        <input
+                          class="text-black font-weight-bold border border-light"
+                          type="hidden"
+                          name="total"
+                          th:value="${calculatedValue != null ?  + calculatedValue : '{{cart.amount}}'}"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="hidden"
+                          id="inputAmount"
+                          name="totalAmount"
+                          value="{{cart.amount}}"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <input
+                  class="text-black font-weight-bold border border-light"
+                  type="hidden"
+                  th:value="${{idCode}}"
+                  name="IdCode"
+                />
+
+                <div
+                  class="btn-group btn-group-toggle d-flex flex-column mb-4"
+                  data-toggle="buttons"
+                >
+                  <label class="btn btn-secondary active">
+                    <input
+                      type="radio"
+                      name="options"
+                      id="option1"
+                      autocomplete="off"
+                      checked
+                    />
+                    Thanh toán khi nhận hàng
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input
+                      disabled="true"
+                      type="radio"
+                      name="options"
+                      id="option2"
+                      autocomplete="off"
+                    />
+                    Thẻ ngân hàng
+                  </label>
+                </div>
+
+                <button
+                  class="btn btn-dark btn-lg py-3 btn-block"
+                  id="placeOrderButton"
+                  onclick="placeOrder()"
+                >
+                  Thanh toán
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <h2 class="h3 mb-3 text-black">Thông tin người dùng</h2>
+                  <div class="p-3 p-lg-5 border">
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label th:text="${message}"></label>
+                        <label for="c_fname" class="text-black"
+                          >Tên người nhận<span class="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="fullname"
+                          name="fullname"
+                          th:value="${user.fullname}"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-12">
+                        <label th:text="${message}"></label>
+                        <label for="c_fname" class="text-black"
+                          >Số điện thoại
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="phone"
+                          name="phone"
+                          
+                        />
+                        <span id="phone-error" class="text-danger"></span>
+                      </div>
+                      <div class="col-md-12 pt-4">
+                        <label for="c_email_address" class="text-black"
+                          >Email
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="email"
+                          name="email"
+                          th:value="${user.email}"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-12 pt-4">
+                        <label class="text-danger" th:text="${session.messagesAddress}"></label>
+                        <select class="form-select" name="address2" id="address2">
+  <!--												<option selected disabled>Open address menu</option>-->
+                          <!-- Kiểm tra điều kiện userAddresses null hoặc trống -->
+                          <th:block
+                            th:if="${userAddresses == null or #lists.isEmpty(userAddresses)}">
+                            <option value="" disabled>Vui lòng thêm địa chỉ</option>
+                          </th:block>
+                          <!-- Nếu userAddresses không null và không trống, hiển thị danh sách địa chỉ -->
+                          <th:block
+                            th:if="${userAddresses != null and not #lists.isEmpty(userAddresses)}">
+                            <option th:each="address : ${userAddresses}"
+                              th:value="${address.id}" th:text="${address.addressDetail}">
+                            </option>
+                        </select>
+                      </div>
+                      <!-- <div class="col-md-12 pt-4">
+                        <label for="c_fname" class="text-black"
+                          >Nhập địa chỉ
+                          <span class="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="address"
+                          name="address"
+                          required
+                        />
+                        <span id="address-error" class="text-danger"></span>
+                      </div> -->
+                       
+                      <a class="btn btn-dark mt-4  text-light"
+											id="editButton">Chỉnh sửa địa chỉ</a>
+
+										<div class="col-md-12 mt-3 address-div" style="display: none;">
+											<label for="c_fname" class="text-black">Tỉnh/Thành phố<span
+													class="text-danger">*</span>
+											</label> <select class="form-select mb-3" name="provinceLabel"
+												id="province">
+												<option value="">chọn tỉnh/thành phố</option>
+											</select> <label for="c_fname" class="text-black">Quận<span
+													class="text-danger">*</span>
+											</label> <select class="form-select mb-3" name="districtLabel"
+												id="district">
+												<option value="">chọn quận</option>
+											</select> <label for="c_fname" class="text-black">Phường<span
+													class="text-danger">*</span>
+											</label> <select class="form-select mb-3" name="wardLabel" id="ward">
+												<option value="">chọn phường</option>
+											</select> <label for="c_address" class="text-black">Tên đường <span class="text-danger">*</span>
+											</label> <input type="text" class="form-control" id="address" name="address"
+												>
+
+											<div class="btn-group w-100" role="group" aria-label="Basic example">
+												<button class="btn btn-dark my-3  py-3 btn-block  mx-1"
+													formaction="/addAddress" formmethod="post">Thêm</button>
+
+												<button class="btn my-3 btn btn-dark  py-3 btn-block  mx-1 "
+													formaction="/updateAddress" formmethod="post">Sửa</button>
+												<button class="btn my-3 btn btn-dark  py-3 btn-block  mx-1 "
+													formaction="/deleteAddress" formmethod="post">
+													Xóa</a>
+											</div>
+
+										</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row mb-5 border ">
+							<div class="col-md-12">
+
+								<div th:if="${error}" class="alert alert-danger">
+									<p th:text="${error}"></p>
+								</div>
+
+								<div class="row">
+									<div class="col-md-12">
+										<label class="text-black h4" for="coupon">Coupon</label>
+										<p>Enter your coupon code if you have one.</p>
+									</div>
+									<div class="col-md-8 mb-5 mb-md-0">
+										<input type="text" name="code" class="form-control py-3"
+											placeholder="Nhập mã giảm giá" th:value="${code}">
+									</div>
+									<div class="col-md-4 mb-5">
+										<button type="submit" class="btn btn-dark btn-sm"
+											formaction="/searchCodee">Tìm kiếm</button>
+									</div>
+								</div>
+							</div>
+						</div> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      // Thêm sự kiện click ẩn hiện vào nút "Edit"
+      var addressDiv = document.querySelector(".address-div");
+      var editButton = document.getElementById("editButton");
+      editButton.addEventListener("click", function () {
+        var isHidden = addressDiv.style.display === "none";
+        if (isHidden) {
+          addressDiv.style.display = "block";
+        } else {
+          addressDiv.style.display = "none";
+        }
+      });
+      // SỰ KIỆN NÚT PLACE ORDER
+      // SỰ KIỆN NÚT PLACE ORDER
+      function placeOrder() {
+        if (validatePhone() == false) {
+          return;
+        } else {
+          var option1 = document.getElementById("option1");
+          var option2 = document.getElementById("option2");
+          var placeOrderButton = document.getElementById("placeOrderButton");
+          if (option1.checked) {
+            // Nếu thanh toán khi nhận hàng, chuyển hướng đến trang "/checkout.html" bằng phương thức POST
+            placeOrderButton.formAction = "/checkout.html";
+            placeOrderButton.formMethod = "post";
+            placeOrderButton.click(); // Gọi sự kiện click để thực hiện chuyển hướng
+          } else if (option2.checked) {
+            // Nếu thanh toán qua thẻ ngân hàng, chuyển hướng đến trang "/VnPay" bằng phương thức GET
+            placeOrderButton.formAction = "/VnPay";
+            placeOrderButton.formMethod = "get";
+            placeOrderButton.click(); // Gọi sự kiện click để thực hiện chuyển hướng
+          }
+        }
+      }
+
+      // Lấy ra trường địa chỉ
+
+      // Hàm validate địa chỉ
+      // Lấy ra trường địa chỉ
+      var addressInput = document.getElementById("address");
+
+      // Hàm validate địa chỉ
+      function validateAddress() {
+        // Lấy giá trị của trường địa chỉ
+        var addressValue = addressInput.value.trim();
+
+        // Lấy ra thẻ span để hiển thị thông báo lỗi
+        var addressError = document.getElementById("address-error");
+
+        // Kiểm tra xem địa chỉ có rỗng không
+        if (addressValue === "") {
+          // Nếu rỗng, hiển thị thông báo lỗi và trả về false
+          addressError.textContent = "Vui lòng nhập địa chỉ.";
+          return false;
+        } else {
+          // Nếu không rỗng, xóa thông báo lỗi (nếu có) và trả về true
+          addressError.textContent = "";
+          return true;
+        }
+      }
+
+      // Sự kiện blur để kiểm tra validate khi người dùng rời khỏi trường địa chỉ
+      addressInput.addEventListener("blur", validateAddress);
+
+      // Sự kiện blur để kiểm tra validate khi người dùng rời khỏi trường địa chỉ
+      addressInput.addEventListener("blur", validateAddress);
+
+      function validatePhone() {
+        const phoneInput = document.getElementById("phone");
+        const phone = phoneInput.value.trim(); // Remove leading/trailing spaces
+
+        const phoneRegex = /^(84|0[3|5|7|8|9])+([0-9]{8})\b$/;
+        const isValid = phoneRegex.test(phone);
+
+        if (!isValid) {
+          const errorSpan = document.getElementById("phone-error");
+          errorSpan.textContent = "Số điện thoại không hợp lệ."; // Set custom error message
+          return false; // Prevent form submission if invalid
+        }
+
+        return true; // Allow form submission if valid
+      }
+
+      const phoneForm = document.querySelector("form"); // Assuming your phone number is within a form
+      phoneForm.addEventListener("submit", validatePhone);
+    </script>
+  </body>
+</html>
