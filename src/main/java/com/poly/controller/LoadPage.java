@@ -49,12 +49,12 @@ public class LoadPage {
 	ImageDAO imageDAO;
 	@Autowired
 	OrderDetailDAO orderDetailDAO;
-	
 
 	@Autowired
 	ReplyDAO replyDAO;
 
-	@GetMapping({ "/contact.html", "/about.html", "/ChangeInfomation.html","/ChangeInfomation2.html" , "/TrangThai.html", "/ChangePassword.html"})
+	@GetMapping({ "/contact.html", "/about.html", "/ChangeInfomation.html", "/ChangeInfomation2.html",
+			"/TrangThai.html", "/ChangePassword.html" })
 	public String loadPage(HttpServletRequest request) {
 		String path = request.getServletPath();
 
@@ -67,41 +67,41 @@ public class LoadPage {
 			return "ChangeInfomation";
 		} else if ("/ChangeInfomation2.html".equals(path)) {
 			return "ChangeInfomation2";
-		}else if ("/TrangThai.html".equals(path)) {
+		} else if ("/TrangThai.html".equals(path)) {
 			return "TrangThai";
 		} else if ("/ChangePassword.html".equals(path)) {
 			return "ChangePassword";
 		}
-		 
+
 		return "error";
 	}
 
-	@RequestMapping({ "/", "index.html" })
+	@RequestMapping({ "/", "/index.html" })
 	public String index(Model model) {
-		List<Product> pro = productDAO.topProduct();
-		List<Image> images = imageDAO.findAll();
-		List<Product> products = productDAO.findAll();
+		try {
+			List<Product> pro = productDAO.topProduct();
+			List<Image> images = imageDAO.findAll();
+			List<Product> products = productDAO.findAll();
 
-		List<DiscountProduct> discountProducts = dpDAO.findAll();
+			List<DiscountProduct> discountProducts = dpDAO.findAll();
 
-		List<Product> newProduct = productDAO.NewProduct();
-		List<Object[]> orderDetails = orderDetailDAO.findByAllTopProductOrderDetail();
-        model.addAttribute("orderDetails", orderDetails);
-		model.addAttribute("pro", pro);
-		model.addAttribute("newProduct", newProduct);
-		model.addAttribute("images", images);
-		model.addAttribute("products", products);
-		model.addAttribute("discountProducts", discountProducts);
-		
-		  // Truy vấn danh sách hãng và số lượng sản phẩm tương ứng
-	    List<Object[]> results = productDAO.countProductsByCategory();
-	    model.addAttribute("results", results);
-	
-		
+			List<Product> newProduct = productDAO.NewProduct();
+			List<Object[]> orderDetails = orderDetailDAO.findByAllTopProductOrderDetail();
+			model.addAttribute("orderDetails", orderDetails);
+			model.addAttribute("pro", pro);
+			model.addAttribute("newProduct", newProduct);
+			model.addAttribute("images", images);
+			model.addAttribute("products", products);
+			model.addAttribute("discountProducts", discountProducts);
 
+			// Truy vấn danh sách hãng và số lượng sản phẩm tương ứng
+			List<Object[]> results = productDAO.countProductsByCategory();
+			model.addAttribute("results", results);
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return "index";
 	}
-	
-
 
 }
