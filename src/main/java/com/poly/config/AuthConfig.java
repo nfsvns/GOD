@@ -19,10 +19,13 @@ import com.poly.service.UserService;
 @EnableWebSecurity
 public class AuthConfig extends WebSecurityConfigurerAdapter {
 
+
 	@Bean
 	public BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+
 
 	@Autowired
 	UserService userService;
@@ -43,16 +46,15 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 		// demo 1
 		http.authorizeRequests()
 
-				// .antMatchers("/history", "/revenue", "/account.html", "/orderDetail",
-				// "/productAdmin",
-				// "/categoryAdmin", "/report").hasAnyRole("DIRE", "STAF")
-				.antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
-				.antMatchers("/check/**").authenticated()
-				.antMatchers("/shop.html/addComments/**").authenticated()
-				.antMatchers("/shop.html/replyComments**").authenticated()
-
-				.antMatchers("/rest/authorities", "/rest/revenue").hasRole("ADMI")
-				.anyRequest().permitAll(); // anonymous
+//		.antMatchers("/history", "/revenue", "/account.html", "/orderDetail", "/productAdmin",
+//			"/categoryAdmin", "/report").hasAnyRole("DIRE", "STAF")
+		.antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
+		.antMatchers("/check/**").authenticated()
+		.antMatchers("/shop.html/addComments/**").authenticated()
+		.antMatchers("/shop.html/replyComments**").authenticated()
+		
+		.antMatchers("/rest/authorities","/rest/revenue").hasRole("ADMI")
+		.anyRequest().permitAll(); // anonymous
 
 		// giao diện đăng nhập
 		http.formLogin().loginPage("/login")
@@ -67,12 +69,12 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 		http.logout().logoutUrl("/logout").logoutSuccessUrl("/logout/success");
 
 		// oauth2 - đăng nhập từ mạng xh
-		// http.oauth2Login()
-		// .loginPage("/login.html")
-		// .defaultSuccessUrl("/oauth2/login/success", true)
-		// .failureUrl("/login.html/error")
-		// .authorizationEndpoint()
-		// .baseUri("/oauth2/authorization");
+		http.oauth2Login()
+		.loginPage("/login.html")
+		.defaultSuccessUrl("/oauth2/login/success", true)
+		.failureUrl("/login.html/error")
+		.authorizationEndpoint()
+		.baseUri("/oauth2/authorization");
 
 	}
 

@@ -17,14 +17,12 @@ public class MailInfo {
 	String[] bcc;
 	String subject;
 	String body;
-	List<File> files=new ArrayList<>();
-	
+	List<File> files = new ArrayList<>();
+
 	public MailInfo(String to, String subject, String body) {
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
 	}
-	
-	
-	
+
 }

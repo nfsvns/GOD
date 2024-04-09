@@ -44,6 +44,8 @@ import com.poly.service.MailerService;
 import com.poly.service.OrderService;
 import com.poly.service.SessionService;
 
+import lombok.var;
+
 @Controller
 public class OrderController {
 	@Autowired
@@ -337,49 +339,57 @@ public class OrderController {
 		}
 
 		//// GỬI MAIL ////
-		System.out.println(email);
-		MailInfo mail = new MailInfo();
-		mail.setTo(email);
-		mail.setSubject("Đơn hàng của bạn đã đặt thành công");
+		// System.out.println(email);
+		// MailInfo mail = new MailInfo();
+		// mail.setTo(email);
+		// mail.setSubject("Đơn hàng của bạn đã đặt thành công");
 
-		// Tạo nội dung email
-		StringBuilder bodyBuilder = new StringBuilder();
-		bodyBuilder.append("Tổng hóa đơn của ").append(fullname).append(" là: $").append(total).append(" tại địa chỉ: ")
-				.append(fulladdress).append("<br><br>");
+		// // Tạo nội dung email
+		// StringBuilder bodyBuilder = new StringBuilder();
+		// bodyBuilder.append("Tổng hóa đơn của ").append(fullname).append(" là:
+		// $").append(total).append(" tại địa chỉ: ")
+		// .append(fulladdress).append("<br><br>");
 
-		// Tạo bảng với CSS
-		bodyBuilder.append("<table style=\"border-collapse: collapse;\">");
-		bodyBuilder.append("<tr>" + "<th style=\"border: 1px solid black; padding: 8px;\">Sản phẩm</th>"
-				+ "<th style=\"border: 1px solid black; padding: 8px;\">Số lượng</th>"
-				+ "<th style=\"border: 1px solid black; padding: 8px;\">Size</th>"
-				+ "<th style=\"border: 1px solid black; padding: 8px;\">Giá</th>"
-				+ "<th style=\"border: 1px solid black; padding: 8px;\">Tổng cộng</th></tr>");
+		// // Tạo bảng với CSS
+		// bodyBuilder.append("<table style=\"border-collapse: collapse;\">");
+		// bodyBuilder.append("<tr>" + "<th style=\"border: 1px solid black; padding:
+		// 8px;\">Sản phẩm</th>"
+		// + "<th style=\"border: 1px solid black; padding: 8px;\">Số lượng</th>"
+		// + "<th style=\"border: 1px solid black; padding: 8px;\">Size</th>"
+		// + "<th style=\"border: 1px solid black; padding: 8px;\">Giá</th>"
+		// + "<th style=\"border: 1px solid black; padding: 8px;\">Tổng
+		// cộng</th></tr>");
 
-		// Lấy thông tin chi tiết của từng sản phẩm trong giỏ hàng và thêm vào bảng
-		for (int i = 0; i < productId.length; i++) {
-			Product product = productDAO.findById(Integer.parseInt(productId[i])).get();
-			int quantity = Integer.parseInt(countProduct[i]);
+		// // Lấy thông tin chi tiết của từng sản phẩm trong giỏ hàng và thêm vào bảng
+		// for (int i = 0; i < productId.length; i++) {
+		// Product product = productDAO.findById(Integer.parseInt(productId[i])).get();
+		// int quantity = Integer.parseInt(countProduct[i]);
 
-			bodyBuilder.append("<tr>");
-			bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">")
-					.append(product.getName()).append("</td>");
-			bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">")
-					.append(quantity).append("</td>");
+		// bodyBuilder.append("<tr>");
+		// bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px;
+		// text-align: center;\">")
+		// .append(product.getName()).append("</td>");
+		// bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px;
+		// text-align: center;\">")
+		// .append(quantity).append("</td>");
 
-			bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">")
-					.append(size.get(i)).append("</td>");
+		// bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px;
+		// text-align: center;\">")
+		// .append(size.get(i)).append("</td>");
 
-			bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">").append("$")
-					.append(product.getPrice()).append("</td>");
+		// bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px;
+		// text-align: center;\">").append("$")
+		// .append(product.getPrice()).append("</td>");
 
-			bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">").append("$")
-					.append(product.getPrice() * quantity).append("</td>");
-			bodyBuilder.append("</tr>");
-		}
+		// bodyBuilder.append("<td style=\"border: 1px solid black; padding: 8px;
+		// text-align: center;\">").append("$")
+		// .append(product.getPrice() * quantity).append("</td>");
+		// bodyBuilder.append("</tr>");
+		// }
 
-		bodyBuilder.append("</table>");
-		mail.setBody(bodyBuilder.toString());
-		mailerService.queue(mail);
+		// bodyBuilder.append("</table>");
+		// mail.setBody(bodyBuilder.toString());
+		// mailerService.queue(mail);
 		return "redirect:/thankyou.html";
 
 	}

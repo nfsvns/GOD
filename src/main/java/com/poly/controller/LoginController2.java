@@ -104,7 +104,7 @@ public class LoginController2 {
 		model.addAttribute("username", username); // Thêm vào Controller
 		model.addAttribute("fullname", fullname);
 		model.addAttribute("email", email);
-
+		Account userSession = sessionService.getAttribute("account");
 		// Kiểm tra điều kiện đăng ký, như bạn đã thực hiện
 		if (accountDAO.findById(username).isPresent()) {
 			model.addAttribute("error", "Vui lòng đặt tên username khác!");
@@ -117,53 +117,74 @@ public class LoginController2 {
 				model.addAttribute("error", "Mật khẩu và xác nhận mật khẩu không khớp. Vui lòng nhập lại.");
 				return "register";
 			} else {
-				String generatedOtp = generateOtp();
-				otpMap.put(username, generatedOtp);
-				// Lưu trữ otpMap trong phiên
-				sessionService.setAttribute("otpMap", otpMap);
-				sessionService.setAttribute("account", new Account(username, password, fullname, phone, email));
-				mailerService.sendOtpEmail(email, "Xác nhận đăng ký", "Mã OTP của bạn là: " + generatedOtp);
-				return "otp";
+				Account user = new Account();
+				user.setUsername(userSession.getUsername());
+				user.setPassword(userSession.getPassword());
+				user.setFullname(userSession.getFullname());
+				user.setEmail(userSession.getEmail());
+				user.setPhoto("nv01.jpg");
+
+				accountDAO.save(user);
+				Authority authority = new Authority();
+				authority.setAccount(user);
+				Role role = roleDAO.findById("CUST").get();
+
+				authority.setRole(role);
+				authorityDAO.save(authority);
+				model.addAttribute("message", "Đăng kí thành công!");
+				return "/login";
+				// String generatedOtp = generateOtp();
+				// otpMap.put(username, generatedOtp);
+				// // Lưu trữ otpMap trong phiên
+				// sessionService.setAttribute("otpMap", otpMap);
+				// sessionService.setAttribute("account", new Account(username, password,
+				// fullname, phone, email));
+				// mailerService.sendOtpEmail(email, "Xác nhận đăng ký", "Mã OTP của bạn là: " +
+				// generatedOtp);
+				// return "otp";
 			}
 		}
 
 	}
 
-	@PostMapping("/verify-otp")
-	public String verifyOtp(Model model, @RequestParam String username, @RequestParam String otp,
-			@RequestParam String password, @RequestParam String fullname, @RequestParam String email,
-			@RequestParam String confirmPassword, HttpServletRequest request) {
+	// @PostMapping("/verify-otp")
+	// public String verifyOtp(Model model, @RequestParam String username,
+	// @RequestParam String otp,
+	// @RequestParam String password, @RequestParam String fullname, @RequestParam
+	// String email,
+	// @RequestParam String confirmPassword, HttpServletRequest request) {
 
-		// Kiểm tra mã OTP nhập vào có khớp với mã đã gửi hay không
-		Map<String, String> map = sessionService.getAttribute("otpMap");
-		Account userSession = sessionService.getAttribute("account");
+	// // Kiểm tra mã OTP nhập vào có khớp với mã đã gửi hay không
+	// Map<String, String> map = sessionService.getAttribute("otpMap");
+	// Account userSession = sessionService.getAttribute("account");
 
-		if (map.containsKey(userSession.getUsername()) && map.get(userSession.getUsername()).equals(otp.trim())) {
-			// Nếu khớp, xóa mã OTP khỏi map và chuyển hướng đến trang đăng ký thành công
-			// hoặc trang chính
-			map.remove(username);
-			model.addAttribute("message", "Xác nhận OTP thành công!");
-			Account user = new Account();
-			user.setUsername(userSession.getUsername());
-			user.setPassword(userSession.getPassword());
-			user.setFullname(userSession.getFullname());
-			user.setEmail(userSession.getEmail());
-			user.setPhoto("nv01.jpg");
+	// if (map.containsKey(userSession.getUsername()) &&
+	// map.get(userSession.getUsername()).equals(otp.trim())) {
+	// // Nếu khớp, xóa mã OTP khỏi map và chuyển hướng đến trang đăng ký thành công
+	// // hoặc trang chính
+	// map.remove(username);
+	// model.addAttribute("message", "Xác nhận OTP thành công!");
+	// Account user = new Account();
+	// user.setUsername(userSession.getUsername());
+	// user.setPassword(userSession.getPassword());
+	// user.setFullname(userSession.getFullname());
+	// user.setEmail(userSession.getEmail());
+	// user.setPhoto("nv01.jpg");
 
-			accountDAO.save(user);
-			Authority authority = new Authority();
-			authority.setAccount(user);
-			Role role = roleDAO.findById("CUST").get();
+	// accountDAO.save(user);
+	// Authority authority = new Authority();
+	// authority.setAccount(user);
+	// Role role = roleDAO.findById("CUST").get();
 
-			authority.setRole(role);
-			authorityDAO.save(authority);
-			model.addAttribute("message", "Đăng kí thành công!");
-			return "register";
-		} else {
-			// Nếu không khớp, hiển thị thông báo lỗi
-			model.addAttribute("error", "Mã OTP không hợp lệ!");
-			return "otp";
-		}
-	}
+	// authority.setRole(role);
+	// authorityDAO.save(authority);
+	// model.addAttribute("message", "Đăng kí thành công!");
+	// return "register";
+	// } else {
+	// // Nếu không khớp, hiển thị thông báo lỗi
+	// model.addAttribute("error", "Mã OTP không hợp lệ!");
+	// return "otp";
+	// }
+	// }
 
 }

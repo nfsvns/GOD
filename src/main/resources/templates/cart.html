@@ -83,7 +83,10 @@
               </tbody>
             </table>
           </div>
-
+          <span class="mt-0"
+            >*𝙇𝙪̛𝙪 𝙮́ : 𝙏𝙧𝙪̛𝙤̛́𝙘 𝙠𝙝𝙞 𝙩𝙞𝙚̂́𝙣 𝙝𝙖̀𝙣𝙝 𝙩𝙝𝙖̀𝙣𝙝 𝙩𝙤𝙖́𝙣 𝙦𝙪𝙮́ 𝙠𝙝𝙖́𝙘𝙝 𝙫𝙪𝙞 𝙡𝙤̀𝙣𝙜 𝙩𝙞𝙘𝙠 𝙫𝙖̀𝙤
+            𝙨𝙖̉𝙣 𝙥𝙝𝙖̂̉𝙢 𝙢𝙪𝙤̂́𝙣 𝙢𝙪𝙖</span
+          >
           <!-- </form> -->
         </div>
 
@@ -140,20 +143,14 @@
 
                 <div class="row">
                   <div class="col-md-12" ng-repeat="item in cart.items">
-                    <div ng-show="item.status == true" th-if="item.status">
-                      <a th:href="@{/check}">
-                        <button class="btn btn-dark btn-lg py-3 btn-block">
-                          Tiến hành thanh toán
-                        </button>
-                      </a>
-                    </div>
-                    <div ng-show="item.status == false">
-                      <button
-                        class="btn btn-dark btn-lg py-3 btn-block"
-                        ng-disabled="!item.status"
-                      >
-                        Tiến hành thanh toán
-                      </button>
+                    <div ng-if="item.status == true ">
+                      <th:block th-if="item.status">
+                        <a th:href="@{/check}">
+                          <button class="btn btn-dark btn-lg py-3 btn-block">
+                            Tiến hành thanh toán
+                          </button>
+                        </a>
+                      </th:block>
                     </div>
                   </div>
                 </div>

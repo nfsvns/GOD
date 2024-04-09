@@ -27,7 +27,7 @@ app.controller("cart-ctrl", function($scope, $http, $window) {
 		// lấy size từ sự kiện click 
 		var size = event.target.innerText;
 		$scope.selectedSize = size.trim();
-		var buttons = document.getElementsByClassName('btn');
+		var buttons = document.getElementsByClassName('button-39');
 		var size = event.target.innerText.trim();
 		/*		console.log('size' + size);*/
 		$http.get(`/rest/sizeManager/checkQuantity/${id}/${size}`).then(stockResp => {
@@ -40,11 +40,11 @@ app.controller("cart-ctrl", function($scope, $http, $window) {
 		for (var i = 0; i < buttons.length; i++) {
 			if (buttons[i].innerText.trim() === size) {
 				buttons[i].classList.remove('btn-dark');
-				buttons[i].classList.add('btn-danger'); // Chọn màu sắc mong muốn cho button được chọn
+				buttons[i].classList.add('btn-dark'); // Chọn màu sắc mong muốn cho button được chọn
 			} else {
 				buttons[i].classList.remove('btn-danger'); // Chọn màu sắc mặc định cho các button không được chọn
 				buttons[i].classList.add('btn-dark');
-				buttons[i].classList.add('text-light');
+				buttons[i].classList.add('text-black');
 			}
 		}
 
