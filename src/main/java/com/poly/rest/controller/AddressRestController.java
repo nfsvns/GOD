@@ -34,15 +34,18 @@ public class AddressRestController {
 
 		return addressService.findById(id);
 	}
+
 	@PostMapping
 	public Address post(@RequestBody Address address) {
 		addressService.create(address);
 		return address;
 	}
+
 	@PutMapping("{id}")
 	public Address put(@PathVariable("id") Integer id, @RequestBody Address address) {
 		return addressService.update(address);
 	}
+
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		// Kiểm tra trước khi xóa

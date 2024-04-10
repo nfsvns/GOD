@@ -1,15 +1,13 @@
 package com.poly.rest.controller;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.dao.OrderDetailDAO;
-import com.poly.entity.Category;
+
 import com.poly.entity.DiscountProduct;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.poly.entity.Image;
 import com.poly.entity.OrderDetail;
 import com.poly.entity.Product;
@@ -141,42 +138,45 @@ public class ProductRestController {
 	@GetMapping("/repurchase/{orderId}")
 	@ResponseBody
 	public Map<String, Object> repurchase(@PathVariable("orderId") Integer orderId) {
-	    Map<String, Object> response = new HashMap<>();
-	    try {
-	        Long id = orderId.longValue();
-	        System.out.println("Order ID: " + id);
-	        List<OrderDetail> orderDetails = orderDetailDAO.findByOrderDetailId(id);
+		Map<String, Object> response = new HashMap<>();
+		try {
+			Long id = orderId.longValue();
+			System.out.println("Order ID: " + id);
+			List<OrderDetail> orderDetails = orderDetailDAO.findByOrderDetailId(id);
 
-	        if (!orderDetails.isEmpty()) {
-	            // Xử lý dữ liệu và đưa vào response
-	            List<Map<String, Object>> orderDetailsWithImages = new ArrayList<>();
-	            for (OrderDetail orderDetail : orderDetails) {
-	                Map<String, Object> orderDetailMap = new HashMap<>();
-	                
-	                orderDetailMap.put("id", orderDetail.getProduct().getId());
-	                orderDetailMap.put("name", orderDetail.getProduct().getName());
-	                orderDetailMap.put("price", orderDetail.getProduct().getPrice());
-	                orderDetailMap.put("sizes", orderDetail.getSize());
-	                orderDetailMap.put("qty", orderDetail.getQuantity());
-	                orderDetailMap.put("image", orderDetail.getProduct().getImages().get(0).getImage()); // Lấy hình ảnh đầu tiên từ danh sách hình ảnh của sản phẩm
-	                // Thêm các trường khác tùy thuộc vào cấu trúc của đối tượng OrderDetail
+			if (!orderDetails.isEmpty()) {
+				// Xử lý dữ liệu và đưa vào response
+				List<Map<String, Object>> orderDetailsWithImages = new ArrayList<>();
+				for (OrderDetail orderDetail : orderDetails) {
+					Map<String, Object> orderDetailMap = new HashMap<>();
 
-	                orderDetailsWithImages.add(orderDetailMap);
-	                
-	            }
-	            response.put("orderDetails", orderDetailsWithImages);
-	        } else {
-	            System.out.println("Order details not found for ID: " + id); // Log the error
-	            response.put("error", "Order details not found");
-	        }
-	    } catch (NumberFormatException e) {
-	        System.out.println("Error: Invalid orderId format");
-	        response.put("error", "Invalid orderId format");
-	    }
+					orderDetailMap.put("id", orderDetail.getProduct().getId());
+					orderDetailMap.put("name", orderDetail.getProduct().getName());
+					orderDetailMap.put("price", orderDetail.getProduct().getPrice());
+					orderDetailMap.put("sizes", orderDetail.getSize());
+					orderDetailMap.put("qty", orderDetail.getQuantity());
+					orderDetailMap.put("image", orderDetail.getProduct().getImages().get(0).getImage()); // Lấy hình ảnh
+																											// đầu tiên
+																											// từ danh
+																											// sách hình
+																											// ảnh của
+																											// sản phẩm
+					// Thêm các trường khác tùy thuộc vào cấu trúc của đối tượng OrderDetail
 
-	    return response;
+					orderDetailsWithImages.add(orderDetailMap);
+
+				}
+				response.put("orderDetails", orderDetailsWithImages);
+			} else {
+				System.out.println("Order details not found for ID: " + id); // Log the error
+				response.put("error", "Order details not found");
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Error: Invalid orderId format");
+			response.put("error", "Invalid orderId format");
+		}
+
+		return response;
 	}
-
-
 
 }

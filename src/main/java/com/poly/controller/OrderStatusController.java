@@ -54,33 +54,34 @@ public class OrderStatusController {
 
 	@GetMapping("/TrangThai")
 	public String viewOrderStatus(Model model, HttpServletRequest request) {
-//		model.addAttribute("cartItems", shoppingCartDAO.getAll());
-//		model.addAttribute("total", shoppingCartDAO.getAmount());
+		// model.addAttribute("cartItems", shoppingCartDAO.getAll());
+		// model.addAttribute("total", shoppingCartDAO.getAmount());
 		return "TrangThai";
 	}
+
 	@GetMapping({ "/shipped", "/unshipped", "/waitForConfimation", "/cancelled" })
 	public String handleOrderStatus(Model model, HttpServletRequest request) {
-	    String remoteUser = request.getRemoteUser();
-	    if (remoteUser != null) {
-	        List<Product> products = productDAO.findAll();
-	        List<Image> images = imageDAO.findAll();
-	        model.addAttribute("products", products);
-	        model.addAttribute("images", images);
-	        List<Order> order = orderDAO.findByUsername(remoteUser);
+		String remoteUser = request.getRemoteUser();
+		if (remoteUser != null) {
+			List<Product> products = productDAO.findAll();
+			List<Image> images = imageDAO.findAll();
+			model.addAttribute("products", products);
+			model.addAttribute("images", images);
+			List<Order> order = orderDAO.findByUsername(remoteUser);
 
-	        Collections.sort(order, new Comparator<Order>() {
-	            public int compare(Order o1, Order o2) {
-	                return o2.getCreateDate().compareTo(o1.getCreateDate());
-	            }
-	        });
+			Collections.sort(order, new Comparator<Order>() {
+				public int compare(Order o1, Order o2) {
+					return o2.getCreateDate().compareTo(o1.getCreateDate());
+				}
+			});
 
-	        List<OrderDetail> orderDetail = orderDetailDAO.findAll();
-	        model.addAttribute("order", order);
-	        model.addAttribute("orderDetail", orderDetail);
-	    }
+			List<OrderDetail> orderDetail = orderDetailDAO.findAll();
+			model.addAttribute("order", order);
+			model.addAttribute("orderDetail", orderDetail);
+		}
 
-	    String viewName = "orderstatus/" + request.getRequestURI().substring(1);
-	    return viewName;
+		String viewName = "orderstatus/" + request.getRequestURI().substring(1);
+		return viewName;
 	}
 
 	@PostMapping("/updateOrder")
@@ -104,7 +105,6 @@ public class OrderStatusController {
 		return "redirect:/waitForConfimation";
 	}
 
-	
 	/*
 	 * @GetMapping("/repurchase/{orderId}") public String
 	 * repurchase(@RequestParam("orderId") String orderId) { try { Long id =

@@ -9,10 +9,12 @@ import com.poly.dao.AddressDAO;
 import com.poly.dao.CategoryDAO;
 import com.poly.entity.Address;
 import com.poly.service.AddressService;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 	@Autowired
 	AddressDAO adddao;
+
 	@Override
 	public List<Address> findAll() {
 		return adddao.findAll();
@@ -38,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public void delete(Integer id) {
 		adddao.deleteById(id);
-		
+
 	}
 
 }

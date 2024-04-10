@@ -1,18 +1,11 @@
 package com.poly.controller;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,13 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poly.dao.AccountDAO;
-import com.poly.dao.CategoryDAO;
+
 import com.poly.dao.CommentDAO;
 import com.poly.dao.DiscountProductDAO;
 import com.poly.dao.ImageDAO;
@@ -38,10 +30,10 @@ import com.poly.dao.ProductDAO;
 
 import com.poly.dao.ReplyDAO;
 import com.poly.dao.SizeDAO;
-import com.poly.entity.Account;
+
 import com.poly.entity.Comment;
 import com.poly.entity.DiscountProduct;
-import com.poly.entity.Image;
+
 import com.poly.entity.Product;
 import com.poly.entity.Reply;
 import com.poly.entity.Size;

@@ -95,10 +95,7 @@ public class ProductServiceImpl implements ProductService {
 	public void DeleteProductAndRelatedData(Integer id) {
 		// TODO Auto-generated method stub
 		dao.DeleteProductAndRelatedData(id);
-		
+
 	}
 
-	
-
-	
 }

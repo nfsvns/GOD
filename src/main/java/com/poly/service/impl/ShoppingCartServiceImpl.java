@@ -51,14 +51,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public ShoppingCart findByProductIdAndUsernameAndSize(Integer id, String username, String size) {
 		return shoppingCartDAO.findShoppingCartByProductIdAndUsernameAndSize(id, username, size);
 	}
-	
+
 	@Transactional
 	@Override
 	public void deleteAll(String username) {
 		List<ShoppingCart> shoppingCarts = shoppingCartDAO.findShoppingCartsByUsername(username);
 		shoppingCartDAO.deleteAll(shoppingCarts);
 	}
-	
+
 	@Transactional
 	@Override
 	public void deleteShoppingCartByUserAndStatus(String username) {

@@ -32,7 +32,7 @@ public class CommentRestController {
 
     @PostMapping
     public Comment createComment(@RequestBody Comment comment) {
-    	
+
         commentService.create(comment);
         return comment;
     }
@@ -47,16 +47,14 @@ public class CommentRestController {
     public void deleteComment(@PathVariable("id") Integer id) {
         commentService.delete(id);
     }
-    
-    
-    
+
     @GetMapping("/details/{id}")
-	public ResponseEntity<List<Reply>> getHistoryDetail(@PathVariable Integer id) {
-		List<Reply> ReplyDetail =  commentService.findByReplyCommentId(id);
-	    if(ReplyDetail != null) {
-	    	return new ResponseEntity<>(ReplyDetail, HttpStatus.OK);
-	    }else {
-	    	return new ResponseEntity<>(ReplyDetail, HttpStatus.NOT_FOUND);
-	    }
-	}
+    public ResponseEntity<List<Reply>> getHistoryDetail(@PathVariable Integer id) {
+        List<Reply> ReplyDetail = commentService.findByReplyCommentId(id);
+        if (ReplyDetail != null) {
+            return new ResponseEntity<>(ReplyDetail, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(ReplyDetail, HttpStatus.NOT_FOUND);
+        }
+    }
 }

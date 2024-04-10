@@ -20,8 +20,6 @@ public class DiscountProductServiceImpl implements DiscountProductService {
 		return discountProductDAO.findAll();
 	}
 
-	
-	
 	@Override
 	public DiscountProduct create(JsonNode DiscountProduct) {
 		// TODO Auto-generated method stub
@@ -64,15 +62,10 @@ public class DiscountProductServiceImpl implements DiscountProductService {
 
 	}
 
- 
-
 	@Override
-	public List<DiscountProduct>  findByIdProductDiscount(Integer productId) {
+	public List<DiscountProduct> findByIdProductDiscount(Integer productId) {
 		// TODO Auto-generated method stub
 		return discountProductDAO.findByIdProductDiscount(productId);
 	}
-
-
-
 
 }

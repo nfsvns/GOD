@@ -42,9 +42,9 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(id);
     }
 
-	@Override
-	public List<Reply> findByReplyCommentId(Integer id) {
-		
-		return commentRepository.findByReplyCommentId(id);
-	}
+    @Override
+    public List<Reply> findByReplyCommentId(Integer id) {
+
+        return commentRepository.findByReplyCommentId(id);
+    }
 }

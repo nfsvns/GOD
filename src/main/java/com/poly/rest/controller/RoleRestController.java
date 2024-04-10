@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poly.entity.Role;
 import com.poly.service.RoleService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/roles")
 public class RoleRestController {
 	@Autowired
 	RoleService roleService;
+
 	@GetMapping
 	public List<Role> getAll() {
 		return roleService.findAll();

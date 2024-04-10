@@ -11,15 +11,15 @@ import com.poly.entity.Image;
 import com.poly.service.ImageService;
 
 @Service
-public class ImageServiceImpl implements ImageService{
-	
+public class ImageServiceImpl implements ImageService {
+
 	private ImageDAO dao;
-	
+
 	@Autowired
-    public ImageServiceImpl(ImageDAO dao) {
-        this.dao = dao;
-    }
-	
+	public ImageServiceImpl(ImageDAO dao) {
+		this.dao = dao;
+	}
+
 	@Override
 	public List<Image> getImageByProductId(Integer productId) {
 		return dao.findByProductId(productId);

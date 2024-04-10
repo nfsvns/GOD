@@ -23,38 +23,41 @@ import com.poly.service.OrderService;
 @RestController
 @RequestMapping("/rest/historys")
 public class OrderRestController {
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@GetMapping
 	public List<Order> getAll() {
 		List<Order> orders = orderService.findAll();
 		orders.sort(Comparator.comparing(Order::getId).reversed());
 		return orders;
 	}
+
 	@GetMapping("{id}")
 	public Order getOne(@PathVariable("id") Long id) {
 		return orderService.findById(id);
 	}
-	
+
 	@PutMapping("{id}")
 	public Order put(@PathVariable("id") Long id, @RequestBody Order order) {
 		return orderService.update(order);
 	}
+
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Long id) {
 		orderService.deleteOrderDetailByOrderId(id);
 		orderService.delete(id);
 	}
+
 	@GetMapping("/details/{id}")
 	public ResponseEntity<List<OrderDetail>> getHistoryDetail(@PathVariable Long id) {
 		List<OrderDetail> detailData = orderService.getDetailDataById(id);
-	    if(detailData != null) {
-	    	return new ResponseEntity<>(detailData, HttpStatus.OK);
-	    }else {
-	    	return new ResponseEntity<>(detailData, HttpStatus.NOT_FOUND);
-	    }
+		if (detailData != null) {
+			return new ResponseEntity<>(detailData, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(detailData, HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

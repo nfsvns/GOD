@@ -11,10 +11,8 @@ import com.poly.entity.Account;
 import com.poly.entity.Authority;
 import com.poly.service.AuthorityService;
 
-
-
 @Service
-public class AuthorityServiceImpl implements AuthorityService{
+public class AuthorityServiceImpl implements AuthorityService {
 	@Autowired
 	AuthorityDAO dao;
 	@Autowired
@@ -41,17 +39,18 @@ public class AuthorityServiceImpl implements AuthorityService{
 
 	@Override
 	public List<Authority> findAuthoritiesByUsername(String username) {
-	    return dao.findAuthoritiesByUsername(username);
-	
+		return dao.findAuthoritiesByUsername(username);
+
 	}
+
 	@Override
 	public boolean revokeAuthoritiesByUsername(String username) {
-        List<Authority> authorities = dao.findAuthoritiesByUsername(username);
-        for (Authority authority : authorities) {
-            dao.delete(authority);
-        }
+		List<Authority> authorities = dao.findAuthoritiesByUsername(username);
+		for (Authority authority : authorities) {
+			dao.delete(authority);
+		}
 		return true;
-    }
+	}
 
 	@Override
 	public Authority findById(Integer id) {

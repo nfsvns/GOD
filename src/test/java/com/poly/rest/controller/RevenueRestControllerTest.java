@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.poly.dao.CategoryDAO;
 import com.poly.dao.OrderDAO;
 import com.poly.dao.OrderDetailDAO;
-
 @SpringBootTest
 class RevenueRestControllerTest {
 	@Autowired
@@ -24,7 +23,7 @@ class RevenueRestControllerTest {
 
 	@Test
 	public void testGetAllYear() {
-		Integer[] expect = { 2023, 2024 }; // Sử dụng Integer[] thay vì int[] để làm việc với List<Integer>
+		Integer[] expect = { 2021, 2023 }; // Sử dụng Integer[] thay vì int[] để làm việc với List<Integer>
 		List<Integer> result = dao.findByYear();
 		assertEquals(Arrays.asList(expect), result);
 	}

@@ -16,16 +16,14 @@ import org.springframework.stereotype.Service;
 
 import com.poly.entity.MailInfo;
 
-
 @Service
-public class MailerServiceImp  implements MailerService{
+public class MailerServiceImp implements MailerService {
 
-	  
 	@Autowired
 	JavaMailSender sender;
 	@Autowired
 	MailerService mailerService;
-   
+
 	@Override
 	public void send(MailInfo mail) throws MessagingException {
 		// TODO Auto-generated method stub
@@ -65,6 +63,7 @@ public class MailerServiceImp  implements MailerService{
 	}
 
 	List<MailInfo> list = new ArrayList<>();
+
 	@Override
 	public void queue(MailInfo mail) {
 		// TODO Auto-generated method stub
@@ -76,7 +75,7 @@ public class MailerServiceImp  implements MailerService{
 		// TODO Auto-generated method stub
 		queue(new MailInfo(to, subject, body));
 	}
-	
+
 	@Scheduled(fixedDelay = 5000)
 	public void run() {
 		while (!list.isEmpty()) {
@@ -88,30 +87,29 @@ public class MailerServiceImp  implements MailerService{
 			}
 		}
 	}
+
 	@Override
 	public void setMailBody(MailInfo mail, String body) {
-	    mail.setBody(body);
+		mail.setBody(body);
 	}
-	public void sendOtp(String to, String otp) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("your_email@gmail.com");
-        message.setTo(to);
-        message.setSubject("OTP Verification");
-        message.setText("Your OTP is: " + otp);
 
-        sender.send(message);
-    }
+	public void sendOtp(String to, String otp) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("your_email@gmail.com");
+		message.setTo(to);
+		message.setSubject("OTP Verification");
+		message.setText("Your OTP is: " + otp);
+
+		sender.send(message);
+	}
 
 	@Override
 	public void sendOtpEmail(String to, String subject, String body) {
-		 SimpleMailMessage message = new SimpleMailMessage();
-	        message.setTo(to);
-	        message.setSubject(subject);
-	        message.setText(body);
-	        sender.send(message);
-	    }
-		
-	
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(body);
+		sender.send(message);
+	}
 
-	 
 }

@@ -1,13 +1,12 @@
 package com.poly.service.impl;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poly.service.UploadService;
@@ -16,7 +15,6 @@ import com.poly.service.UploadService;
 public class UploadServiceImpl implements UploadService {
 	@Autowired
 	ServletContext app;
-
 
 	public File save(MultipartFile file, String folder) {
 		File dir = new File(app.getRealPath("/" + folder));

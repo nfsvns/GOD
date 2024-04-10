@@ -14,12 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Report  {
+public class Report {
 	@Id
 	Serializable group;
-	
+
 	private Double sum;
 	private Long count;
 }
-
-

@@ -4,9 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.entity.DiscountProduct;
-import com.poly.entity.Image;
-
-
 
 public interface DiscountProductService {
 	public List<DiscountProduct> findAll();
@@ -24,8 +21,6 @@ public interface DiscountProductService {
 	public void delete(Integer id);
 
 	public void deleteDiscountCode(Integer id);
-	
-	
-	
+
 	public List<DiscountProduct> findByIdProductDiscount(Integer productId);
 }

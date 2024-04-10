@@ -1,7 +1,7 @@
 package com.poly.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.poly.service.UserService;
 
@@ -19,13 +18,10 @@ import com.poly.service.UserService;
 @EnableWebSecurity
 public class AuthConfig extends WebSecurityConfigurerAdapter {
 
-
 	@Bean
 	public BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
 
 	@Autowired
 	UserService userService;
@@ -46,15 +42,16 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 		// demo 1
 		http.authorizeRequests()
 
-//		.antMatchers("/history", "/revenue", "/account.html", "/orderDetail", "/productAdmin",
-//			"/categoryAdmin", "/report").hasAnyRole("DIRE", "STAF")
-		.antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
-		.antMatchers("/check/**").authenticated()
-		.antMatchers("/shop.html/addComments/**").authenticated()
-		.antMatchers("/shop.html/replyComments**").authenticated()
-		
-		.antMatchers("/rest/authorities","/rest/revenue").hasRole("ADMI")
-		.anyRequest().permitAll(); // anonymous
+				// .antMatchers("/history", "/revenue", "/account.html", "/orderDetail",
+				// "/productAdmin",
+				// "/categoryAdmin", "/report").hasAnyRole("DIRE", "STAF")
+				.antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
+				.antMatchers("/check/**").authenticated()
+				.antMatchers("/shop.html/addComments/**").authenticated()
+				.antMatchers("/shop.html/replyComments**").authenticated()
+
+				.antMatchers("/rest/authorities", "/rest/revenue").hasRole("ADMI")
+				.anyRequest().permitAll(); // anonymous
 
 		// giao diện đăng nhập
 		http.formLogin().loginPage("/login")
@@ -70,11 +67,11 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
 		// oauth2 - đăng nhập từ mạng xh
 		http.oauth2Login()
-		.loginPage("/login.html")
-		.defaultSuccessUrl("/oauth2/login/success", true)
-		.failureUrl("/login.html/error")
-		.authorizationEndpoint()
-		.baseUri("/oauth2/authorization");
+				.loginPage("/login.html")
+				.defaultSuccessUrl("/oauth2/login/success", true)
+				.failureUrl("/login.html/error")
+				.authorizationEndpoint()
+				.baseUri("/oauth2/authorization");
 
 	}
 

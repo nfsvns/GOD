@@ -15,15 +15,17 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "orderdetails")
-public class OrderDetail  implements Serializable{
+public class OrderDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private double price;
 	private Integer quantity;
 	private String size;
-	@ManyToOne @JoinColumn(name = "productId")
+	@ManyToOne
+	@JoinColumn(name = "productId")
 	private Product product;
-	@ManyToOne @JoinColumn(name = "orderId")
+	@ManyToOne
+	@JoinColumn(name = "orderId")
 	private Order order;
 }

@@ -10,21 +10,21 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.dao.OrderDAO;
 import com.poly.dao.OrderDetailDAO;
-import com.poly.entity.Account;
+
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
-import com.poly.entity.Product;
 import com.poly.service.OrderService;
 
 @Service
-public class OrderServiceImpl implements OrderService{
-	
+public class OrderServiceImpl implements OrderService {
+
 	@Autowired
 	OrderDAO dao;
 	@Autowired
 	OrderDetailDAO detaildao;
 	@Autowired
 	OrderService OrderService;
+
 	@Override
 	public List<Order> findAll() {
 		return dao.findAll();
@@ -47,7 +47,6 @@ public class OrderServiceImpl implements OrderService{
 		return null;
 	}
 
-
 	@Override
 	public void delete(Long id) {
 		dao.deleteById(id);
@@ -63,11 +62,12 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		detaildao.deleteById(id);
 	}
+
 	@Override
 	public List<Order> getCurrentUserOrders() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return dao.findByAccountUsername(username);
+		String username = authentication.getName();
+		return dao.findByAccountUsername(username);
 	}
 
 	@Override
@@ -87,18 +87,10 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 	@Override
 	public List<Order> findOrdersByAccount(String username) {
-        return dao.findOrdersByAccount_Username(username);
-    }
+		return dao.findOrdersByAccount_Username(username);
+	}
 
-	
-
-
-	
-	
-	
-	
 }

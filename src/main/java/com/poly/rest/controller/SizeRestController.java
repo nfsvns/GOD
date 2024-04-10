@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.poly.entity.Size;
 
 import com.poly.service.SizeService;
@@ -22,7 +21,6 @@ import com.poly.service.SizeService;
 @RestController
 @RequestMapping("/rest/sizeManager")
 public class SizeRestController {
-
 
 	@Autowired
 	SizeService sizeService;
@@ -54,15 +52,12 @@ public class SizeRestController {
 		sizeService.deleteDiscountCode(id);
 		sizeService.delete(id);
 	}
-	
+
 	@GetMapping("/checkQuantity/{id}/{size}")
 	public Integer checkQuantity(
-	    @PathVariable("id") Integer id,
-	    @PathVariable("size")Integer size
-	) {
-	    return sizeService.findQuantityByProductIdAndSize(id, size);
+			@PathVariable("id") Integer id,
+			@PathVariable("size") Integer size) {
+		return sizeService.findQuantityByProductIdAndSize(id, size);
 	}
 
-	
-	
 }

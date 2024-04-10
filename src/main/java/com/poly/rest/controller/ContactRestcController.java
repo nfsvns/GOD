@@ -24,29 +24,34 @@ import com.poly.service.ContactService;
 public class ContactRestcController {
 
 	@Autowired
-	ContactService ctService; 
+	ContactService ctService;
+
 	@GetMapping
-	public List<Contact> getAll(){
+	public List<Contact> getAll() {
 		return ctService.findAllContacts();
 	}
+
 	@GetMapping("{id}")
-	public Contact getOne( @PathVariable("id") Integer id) {
+	public Contact getOne(@PathVariable("id") Integer id) {
 		return ctService.findContactById(id);
 	}
+
 	@PostMapping
-	public Contact post (@RequestBody Contact contact) {
-		  contact.setCreateDate(LocalDate.now());
+	public Contact post(@RequestBody Contact contact) {
+		contact.setCreateDate(LocalDate.now());
 		ctService.saveContact(contact);
 		return contact;
 	}
+
 	@PutMapping("{id}")
-	public Contact put (@PathVariable("id") Integer id, @RequestBody Contact contact) {
+	public Contact put(@PathVariable("id") Integer id, @RequestBody Contact contact) {
 		return ctService.updateContact(contact);
 	}
+
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		/* codeService.deleteDiscountCode(id); */
 		ctService.deleteContact(id);
 	}
-	
+
 }

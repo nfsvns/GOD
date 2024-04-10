@@ -74,46 +74,45 @@ public class CommentController {
 		// Redirect back to the product page or any desired page
 		return "redirect:/shop-single.html/" + productId; // Adjust the URL as needed
 	}
-	
-	
+
 	@PostMapping("/shop.html/updateComment")
 	public String updateComment(@RequestParam("commentId") Integer commentId,
-	                             @RequestParam("editedDescription") String editedDescription,
-	                             @RequestParam("productId") Integer productId) {
-	    Comment existingComment = commentDAO.findById(commentId).orElse(null);
+			@RequestParam("editedDescription") String editedDescription,
+			@RequestParam("productId") Integer productId) {
+		Comment existingComment = commentDAO.findById(commentId).orElse(null);
 
-	    if (existingComment != null) {
-	        existingComment.setDescription(editedDescription);
-	        commentDAO.save(existingComment);
-	    } else {
-	        throw new IllegalArgumentException("Comment with id " + commentId + " not found!");
-	    }
+		if (existingComment != null) {
+			existingComment.setDescription(editedDescription);
+			commentDAO.save(existingComment);
+		} else {
+			throw new IllegalArgumentException("Comment with id " + commentId + " not found!");
+		}
 
-	    // Redirect back to the product page or any desired page
-	    return "redirect:/shop-single.html/" + productId; // Adjust the URL as needed
+		// Redirect back to the product page or any desired page
+		return "redirect:/shop-single.html/" + productId; // Adjust the URL as needed
 	}
-	  @PostMapping("/shop.html/updateReply")
-	    public String updateReply(@RequestParam("replyId") Integer replyId,
-	                              @RequestParam("editedDescription") String editedDescription,
-	                              @RequestParam("productId") Integer productId,
-	                              Model model,
-	                              HttpServletRequest request) {
-	        Reply existingReply = replyDAO.findById(replyId).orElse(null);
 
-	        if (existingReply != null) {
-	            // Update reply details
-	            existingReply.setDescription(editedDescription);
+	@PostMapping("/shop.html/updateReply")
+	public String updateReply(@RequestParam("replyId") Integer replyId,
+			@RequestParam("editedDescription") String editedDescription,
+			@RequestParam("productId") Integer productId,
+			Model model,
+			HttpServletRequest request) {
+		Reply existingReply = replyDAO.findById(replyId).orElse(null);
 
-	            // Save the updated reply
-	            replyDAO.save(existingReply);
-	        } else {
-	            throw new IllegalArgumentException("Reply with id " + replyId + " not found!");
-	        }
+		if (existingReply != null) {
+			// Update reply details
+			existingReply.setDescription(editedDescription);
 
-	        // Redirect back to the product page or any desired page
-	        return "redirect:/shop-single.html/" + productId; // Adjust the URL as needed
-	    }
+			// Save the updated reply
+			replyDAO.save(existingReply);
+		} else {
+			throw new IllegalArgumentException("Reply with id " + replyId + " not found!");
+		}
 
+		// Redirect back to the product page or any desired page
+		return "redirect:/shop-single.html/" + productId; // Adjust the URL as needed
+	}
 
 	@PostMapping("/shop.html/addComments")
 	public String addComment(@RequestParam(value = "description", required = false) String description,

@@ -1,4 +1,5 @@
 package com.poly.rest.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.entity.Image;
-import com.poly.entity.Product;
+
 import com.poly.service.ImageService;
 
 @CrossOrigin("*")
@@ -23,8 +24,7 @@ public class ImageRestController {
 
 	@Autowired
 	ImageService imageService;
-	
-	
+
 	@GetMapping
 	public List<Image> getAll() {
 		return imageService.findAll();
@@ -34,9 +34,9 @@ public class ImageRestController {
 	public Image getOne(@PathVariable("id") Integer id) {
 		return imageService.findById(id);
 	}
-	
+
 	@GetMapping("/products/{id}")
-	public List<Image> getByProductId(@PathVariable("id") Integer id){
+	public List<Image> getByProductId(@PathVariable("id") Integer id) {
 		return imageService.findByProductId(id);
 	}
 
@@ -55,5 +55,5 @@ public class ImageRestController {
 	public void delete(@PathVariable("id") Integer id) {
 		imageService.delete(id);
 	}
-	
+
 }

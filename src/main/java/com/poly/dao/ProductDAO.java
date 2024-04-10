@@ -1,9 +1,6 @@
 package com.poly.dao;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +58,8 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT COUNT(p) FROM Product p WHERE p.category.id = 'NK' and p.available = True")
 	Integer countNKProducts();
 
-// hàm COALESCE sẽ đặt giá trị là 0 thay vì NULL. Điều này đảm bảo rằng ngay cả khi không có sản phẩm, số lượng sẽ vẫn là 0.
+	// hàm COALESCE sẽ đặt giá trị là 0 thay vì NULL. Điều này đảm bảo rằng ngay cả
+	// khi không có sản phẩm, số lượng sẽ vẫn là 0.
 	@Query("SELECT c.name, COALESCE(COUNT(p), 0), c.available FROM Category c LEFT JOIN Product p ON c.id = p.category.id AND p.available = true GROUP BY c.name, c.available")
 	List<Object[]> countProductsByCategory();
 
@@ -78,15 +76,16 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query(value = "SELECT p.id, p.name, SUM(s.quantity) FROM Products p INNER JOIN Sizes s ON p.id = s.product_id GROUP BY p.id, p.name", nativeQuery = true)
 	List<Object[]> getProductQuantity();
 
-//	@Query(value = "SELECT p.id, p.category_id,p.name,p.price,d.percentage from Products p\r\n"
-//			+ "inner join discount_Sales d on d.id = p.sale_id",nativeQuery = true)
-//	List<Product> findByDiscount();
+	// @Query(value = "SELECT p.id, p.category_id,p.name,p.price,d.percentage from
+	// Products p\r\n"
+	// + "inner join discount_Sales d on d.id = p.sale_id",nativeQuery = true)
+	// List<Product> findByDiscount();
 
 	@Query("SELECT p FROM Product p WHERE p.available = True")
 	Page<Product> findDelete(Pageable pageable);
-	
+
 	@Procedure
-    void DeleteProductAndRelatedData(Integer id);
+	void DeleteProductAndRelatedData(Integer id);
 
 	/*
 	 * @Query(value =

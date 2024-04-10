@@ -27,24 +27,22 @@ public class ProductController2 {
 	@RequestMapping("/shop/list")
 	public String list(Model model, @RequestParam("cid") Optional<String> cid, @RequestParam("p") Optional<Integer> p) {
 		if (cid.orElse("").isEmpty()) {
-		
+
 			List<Product> list = productService.findAll();
 			Pageable pageable = PageRequest.of(p.orElse(0), 6);
 			Page<Product> page = dao.findAll(pageable);
 			model.addAttribute("items", page);
-//			model.addAttribute("items", list);
+			// model.addAttribute("items", list);
 		} else {
 			List<Product> list = productService.findByCategoryId(cid.get());
 			model.addAttribute("items", list);
 		}
 		return "shop";
 	}
-	
-	
 
 	@RequestMapping("/shop/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
-		
+
 		Product item = productService.findById(id);
 		model.addAttribute("item", item);
 		return "shop-single";
@@ -70,11 +68,12 @@ public class ProductController2 {
 		model.addAttribute("items", list);
 		return "shop";
 	}
+
 	@RequestMapping("/shop/detail/sortPriceHtoL")
-	public String sortPriceDesc(Model model ) {
+	public String sortPriceDesc(Model model) {
 		List<Product> list = productService.sortPriceHightToLow();
 		model.addAttribute("items", list);
-		return  "shop";
+		return "shop";
 	}
 
 }

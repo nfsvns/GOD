@@ -7,15 +7,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.poly.interceptor.GlobalInterceptor;
 
-
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer{
+public class InterceptorConfig implements WebMvcConfigurer {
 	@Autowired
 	GlobalInterceptor globalInterceptor;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(globalInterceptor)
-			.addPathPatterns("/**");
-				
+				.addPathPatterns("/**");
+
 	}
 }

@@ -38,5 +38,6 @@ public interface ProductService {
 	Integer countADProducts();
 
 	Integer countNKProducts();
+
 	public void DeleteProductAndRelatedData(Integer id);
 }

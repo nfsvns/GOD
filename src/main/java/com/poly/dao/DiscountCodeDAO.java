@@ -11,12 +11,10 @@ public interface DiscountCodeDAO extends JpaRepository<DiscountCode, Integer> {
 
 	@Query("SELECT o FROM DiscountCode o Where o.code=?1")
 	List<DiscountCode> findBykeyword(String code);
-	
+
 	@Query("SELECT o FROM DiscountCode o Where o.id=?1")
 	DiscountCode findByCodeDisCount(Integer code);
 
 	DiscountCode findByCode(String code);
-	
-	
 
 }

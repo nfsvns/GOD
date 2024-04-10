@@ -13,7 +13,7 @@ public interface CommentService {
     void create(Comment comment);
 
     Comment update(Comment comment);
-    
+
     List<Reply> findByReplyCommentId(Integer id);
 
     void delete(Integer id);

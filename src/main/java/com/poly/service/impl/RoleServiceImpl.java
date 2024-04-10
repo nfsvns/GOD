@@ -9,10 +9,8 @@ import com.poly.dao.RoleDAO;
 import com.poly.entity.Role;
 import com.poly.service.RoleService;
 
-
-
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 	@Autowired
 	RoleDAO dao;
 

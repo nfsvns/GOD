@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RevenueItem {
-	private int month;
+    private int month;
     private double totalRevenue;
 }
