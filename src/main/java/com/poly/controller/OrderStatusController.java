@@ -3,17 +3,15 @@ package com.poly.controller;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poly.dao.AccountDAO;
 import com.poly.dao.ImageDAO;
@@ -21,7 +19,7 @@ import com.poly.dao.OrderDAO;
 import com.poly.dao.OrderDetailDAO;
 import com.poly.dao.ProductDAO;
 import com.poly.dao.ShoppingCartDAO;
-import com.poly.entity.Account;
+
 import com.poly.entity.Image;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
