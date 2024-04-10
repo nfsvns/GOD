@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+>
+  <head>
+    <title>𝔊𝔬𝔡 𝔉𝔞𝔱𝔥𝔢𝔯</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="">
+      <img alt="" src="../../../image/banner.png" width="100%" height="100%" />
+    </div>
+
+    <div class="container mt-5 mb-3 be-vietnam" data-aos="fade-up">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="big-sale">SẢN PHẨM MỚI NHẤT</h1>
+        </div>
+        <div
+          class="col-md-3 col-6 col-sm-6"
+          th:each="pro, iterStart : ${pro}"
+          th:if="${pro.category.available} and ${iterStart.index < 4}"
+        >
+          <div class="product-card-shoe">
+            <div class="product-image-container">
+              <a th:href="@{|/shop-single.html/${pro.id}|}">
+                <img
+                  class="product-image-shoe"
+                  th:src="@{|/images/${pro.images[0].image}|}"
+                  th:alt="${pro.name}"
+                />
+              </a>
+
+              <div
+                class="discount-badge-shoe"
+                th:if="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and
+                             (T(java.time.LocalDate).now().isAfter(pro.discountProduct[0].start_Date) and
+                             (T(java.time.LocalDate).now().isBefore(pro.discountProduct[0].end_Date) or
+                             T(java.time.LocalDate).now().isEqual(pro.discountProduct[0].end_Date)))} and ${pro.discountProduct[0].active}"
+              >
+                <span
+                  th:text="${pro.discountProduct[0].percentage + '%'}"
+                ></span>
+              </div>
+            </div>
+            <div class="product-details-shoe">
+              <div
+                class="product-title-shoe text-truncate"
+                th:text="${pro.name}"
+              ></div>
+              <div
+                th:if="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and
+                             pro.discountProduct[0].active and
+                             (T(java.time.LocalDate).now().isAfter(pro.discountProduct[0].start_Date) and
+                             (T(java.time.LocalDate).now().isBefore(pro.discountProduct[0].end_Date) or
+                             T(java.time.LocalDate).now().isEqual(pro.discountProduct[0].end_Date)))} and ${pro.discountProduct[0].active}"
+              >
+                <span
+                  class="product-price-shoe"
+                  th:text="${'$' + (pro.price - (pro.price * pro.discountProduct[0].percentage / 100))}"
+                ></span>
+                <del
+                  class="original-price-shoe"
+                  th:text="${#numbers.formatInteger(pro.price, 3)} +' VND'"
+                ></del>
+              </div>
+              <div
+                class="product-price-shoe"
+                th:if="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and
+                             (T(java.time.LocalDate).now().isBefore(pro.discountProduct[0].start_Date) or
+                             T(java.time.LocalDate).now().isAfter(pro.discountProduct[0].end_Date))} and ${pro.discountProduct[0].active}"
+              >
+                <span
+                  th:text="${#numbers.formatInteger(pro.price, 3)} +' VND'"
+                ></span>
+              </div>
+              <div
+                class="product-price-shoe"
+                th:unless="${pro.discountProduct != null and not #lists.isEmpty(pro.discountProduct) and pro.discountProduct[0].active}"
+              >
+                <span
+                  th:text="${#numbers.formatInteger(pro.price, 3)} +' VND'"
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

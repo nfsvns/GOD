@@ -97,7 +97,7 @@ public class LoadPage {
 		List<Object[]> results = productDAO.countProductsByCategory();
 		model.addAttribute("results", results);
 
-		return "index";
+		return "index.html";
 	}
 
 }
