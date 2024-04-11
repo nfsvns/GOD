@@ -167,11 +167,14 @@
 			<artifactId>mssql-jdbc</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -200,14 +203,50 @@
 				</configuration>
 			</plugin>
 			<plugin>
+
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version> <!-- Update to a version that supports Java 17 -->
-				<configuration>
-					<source>17</source>
-					<target>17</target>
-				</configuration>
+
+				<artifactId>maven-dependency-plugin</artifactId>
+
+				<version>3.3.0</version>
+
+				<executions>
+
+					<execution>
+
+						<phase>package</phase>
+
+						<goals>
+							<goal>copy</goal>
+						</goals>
+
+						<configuration>
+
+							<artifactItems>
+
+								<artifactItem>
+
+									<groupId>com.heroku</groupId>
+
+									<artifactId>webapp-runner</artifactId>
+
+									<version>9.0.78.0</version>
+
+									<destFileName>webapp-runner.jar</destFileName>
+
+								</artifactItem>
+
+							</artifactItems>
+
+						</configuration>
+
+					</execution>
+
+				</executions>
+
 			</plugin>
+
+
 		</plugins>
 	</build>
 
