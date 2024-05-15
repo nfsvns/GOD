@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
 >
   <head>
-    <title>Shoe Galaxy</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
   </head>
   <body class="be-vietnam">
@@ -14,7 +14,7 @@
           <div class="col-md-9 order-2">
             <div class="row">
               <div class="col-md-12">
-                <
+                
                 <div class="d-flex">
                   <div
                     class="dropdown mr-1 ml-md-auto"
@@ -76,14 +76,22 @@
                 >
                   <div class="product-card-shoe">
                     <div class="product-image-container">
-                      <a th:href="@{|/shop-single.html/${product.id}|}">
-                        <img
-                          th:if="${not #lists.isEmpty(product.images)}"
-                          class="product-image-shoe img-fluid"
-                          th:src="@{|/images/${product.images[0].image}|}"
-                          alt="Product Image"
-                        />
-                      </a>
+                      <div th:if="${product.images != null and not #lists.isEmpty(product.images)}">
+                <a th:if="${product.category.name == 'Tranh tráng gương'}" th:href="@{|/shop-single-picture.html/${product.id}|}">
+                <img
+                  class="product-image-shoe"
+                  th:src="@{|/images/${product.images[0].image}|}"
+                  th:alt="${product.name}"
+                />
+              </a>
+              <a th:unless="${product.category.name == 'Tranh tráng gương'}" th:href="@{|/shop-single.html/${product.id}|}">
+                <img  
+                  class="product-image-shoe"
+                  th:src="@{|/images/${product.images[0].image}|}"
+                  th:alt="${product.name}"
+                />
+            </a>
+              </div>
                       <div>
                         <span th:if="${not #lists.isEmpty(discountProducts)}">
                           <span

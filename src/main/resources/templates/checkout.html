@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
   encoding="UTF-8"
 >
   <head>
-    <title>God Father</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  </head>
+ <style>
+  .table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  text-align: left;
+}
+
+/* CSS cho các phần tử bên trong bảng */
+.product-thumbnail img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-size input,
+.product-quantity input,
+.product-total input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+ </style>
   <body class="be-vietnam">
-    <div class="site-section">
+    <div class="site-section1">
       <div class="container">
-        <div th:if="${messages != null}" class="alert alert-danger">
+        <div th:if="${messages != null}" class="text-success">
           <p th:text="${messages}"></p>
         </div>
         <form action="/checkout.html" method="post">
           <div class="row">
-            <div class="col-md-6 mb-5 mb-md-0">
+            <div class="col-md-8 mb-5 mb-md-0">
               <h2 class="h3 mb-3 text-black">Đơn hàng của bạn</h2>
 
-              <div class="p-5 p-lg-5 border">
-                <table class="table site-block-order-table">
+              <div class="site-blocks-table p-5 p-lg-5 border">
+                <table class="table border-none">
                   <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Hình ảnh</th>
-                      <th>Kích thước</th>
-                      <th>Giá</th>
-                      <th>Số lượng</th>
-                      <th>Tổng cộng</th>
+                      <th>Mã</th>
+                      <th class="product-thumbnail border-none">Hình ảnh</th>
+                      <th class="product-size">Kích thước</th>
+                      <th class="product-price">Giá</th>
+                      <th class="product-quantity">Số lượng</th>
+                      <th class="product-total">Tổng cộng</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,10 +82,10 @@
                           ng-model="item.size"
                           type="text"
                           name="sizeId"
-                          style="width: 100%; border: none; outline: none"
+                          style="width: 60%; border: none; outline: none"
                         /><br />
                       </td>
-                      <td>${{cart.price_product(item)}}</td>
+                      <td>{{cart.price_product(item)}}</td>
                       <td>
                         <input
                           ng-change="cart.updateQtyDatabase(item.id,  item.qty)"
@@ -80,7 +107,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="text-black font-weight-bold">
+                      <td class="text-black font-weight-bold " style="width:100%">
                         <strong>Tổng đơn hàng</strong>
                       </td>
                       <td>
@@ -94,14 +121,15 @@
                           <input
                             name="discountPrice"
                             type="text"
-                            class="text-black font-weight-bold border border-light"
-                            th:value="{#numbers.formatDecimal( '- ' + ' '+ discountPrice, 2, 'COMMA', 2, 'POINT')}"
+                            class="text-danger font-weight-bold border border-light"
+                            th:value="${#numbers.formatDecimal(discountPrice, 0, 'COMMA',1,'POINT')}"
+
                           />
                         </th:block>
                         <th:block th:if="${calculatedValue != null}">
                           <input
                             type="text"
-                            class="text-danger font-weight-bold border border-light"
+                            class="text-black font-weight-bold border border-light"
                             th:value="${calculatedValue}"
                             readonly="readonly"
                           />
@@ -124,14 +152,36 @@
                     </tr>
                   </tbody>
                 </table>
-
+</div>
                 <input
                   class="text-black font-weight-bold border border-light"
                   type="hidden"
                   th:value="${{idCode}}"
                   name="IdCode"
                 />
-
+                <div class="row  ">
+                  <div class="col-md-12">
+  
+                    <div th:if="${error}" class="alert alert-danger">
+                      <p th:text="${error}"></p>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label class="text-black ml-2 h5" for="coupon">Mã giảm giá</label>
+  
+                      </div>
+                      <div class="col-md-8 mb-5 mb-md-0">
+                        <input type="text" name="code" class="form-control py-3"
+                          placeholder="Nhập mã giảm giá vào đây" th:value="${code}">
+                      </div>
+                      <div class="col-md-4 mb-5">
+                        <button type="submit" class="btn btn-dark btn-sm"
+                          formaction="/searchCodee">Áp mã</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="btn-group btn-group-toggle d-flex flex-column mb-4"
                   data-toggle="buttons"
@@ -165,10 +215,10 @@
                 >
                   Thanh toán
                 </button>
-              </div>
+              
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="row mb-2">
                 <div class="col-md-12">
                   <h2 class="h3 mb-3 text-black">Thông tin người dùng</h2>
@@ -199,7 +249,7 @@
                           class="form-control"
                           id="phone"
                           name="phone"
-                          
+                          required
                         />
                         <span id="phone-error" class="text-danger"></span>
                       </div>
@@ -214,7 +264,6 @@
                           id="email"
                           name="email"
                           th:value="${user.email}"
-                          required
                         />
                       </div>
                       <div class="col-md-12 pt-4">
@@ -287,30 +336,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="row mb-5 border ">
-							<div class="col-md-12">
-
-								<div th:if="${error}" class="alert alert-danger">
-									<p th:text="${error}"></p>
-								</div>
-
-								<div class="row">
-									<div class="col-md-12">
-										<label class="text-black h4" for="coupon">Coupon</label>
-										<p>Enter your coupon code if you have one.</p>
-									</div>
-									<div class="col-md-8 mb-5 mb-md-0">
-										<input type="text" name="code" class="form-control py-3"
-											placeholder="Nhập mã giảm giá" th:value="${code}">
-									</div>
-									<div class="col-md-4 mb-5">
-										<button type="submit" class="btn btn-dark btn-sm"
-											formaction="/searchCodee">Tìm kiếm</button>
-									</div>
-								</div>
-							</div>
-						</div> -->
             </div>
           </div>
         </form>
@@ -331,8 +356,11 @@
       // SỰ KIỆN NÚT PLACE ORDER
       // SỰ KIỆN NÚT PLACE ORDER
       function placeOrder() {
-        if (validatePhone() == false) {
+        if (validatePhone() === false) {
           return;
+        }
+        if (validatePhoneInput() === false) {
+        return;
         } else {
           var option1 = document.getElementById("option1");
           var option2 = document.getElementById("option2");
@@ -350,7 +378,16 @@
           }
         }
       }
-
+      function validatePhoneInput() {
+    const phoneInput = document.getElementById("phone");
+    const phone = phoneInput.value.trim(); // Loại bỏ khoảng trắng đầu/cuối chuỗi
+    if (phone === "") {
+        const errorSpan = document.getElementById("phone-error");
+        errorSpan.textContent = "Vui lòng nhập số điện thoại."; // Thiết lập thông báo lỗi
+        return false; // Ngăn chặn việc submit form nếu không hợp lệ
+    }
+    return true; // Cho phép submit form nếu hợp lệ
+}
       // Lấy ra trường địa chỉ
 
       // Hàm validate địa chỉ
@@ -386,7 +423,6 @@
       function validatePhone() {
         const phoneInput = document.getElementById("phone");
         const phone = phoneInput.value.trim(); // Remove leading/trailing spaces
-
         const phoneRegex = /^(84|0[3|5|7|8|9])+([0-9]{8})\b$/;
         const isValid = phoneRegex.test(phone);
 

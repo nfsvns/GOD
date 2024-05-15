@@ -1,22 +1,19 @@
 package com.poly.controller;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -212,7 +209,7 @@ public class OrderController {
 			/* return "thankyou"; */ // Chuyển hướng đến trang thành công hoặc trang bạn muốn
 		} else {
 			// Nếu ít nhất một sản phẩm không đủ số lượng, hiển thị thông báo hoặc xử lý lỗi
-			model.addAttribute("messages", "Số lượng đơn giày của bạn muốn mua lớn hơn số lượng sản phẩm tồn kho!");
+			model.addAttribute("messages", "Số lượng sản phẩm của bạn muốn mua lớn hơn số lượng sản phẩm tồn kho!");
 			return "cart.html";
 		}
 
@@ -292,7 +289,7 @@ public class OrderController {
 				// với thông báo lỗi
 				return "cart.html";
 			}
-			if (address2 != null) {
+			if (address2 != null && phone != null) {
 				// Create a new order
 				Order order = new Order();
 				Timestamp now = new Timestamp(new Date().getTime());
@@ -403,7 +400,7 @@ public class OrderController {
 		}
 
 		sessionService.setAttribute("cartQuantity", totalQuantity);
-		return "thankyou";
+		return "thankyou.html";
 	}
 
 }

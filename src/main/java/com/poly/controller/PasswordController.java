@@ -37,7 +37,7 @@ public class PasswordController {
 
 	@GetMapping("/ChangePassword")
 	public String showChangePasswordForm() {
-		return "ChangePassword";
+		return "ChangePassword.html";
 	}
 
 	@PostMapping("/changepassword")
@@ -64,9 +64,9 @@ public class PasswordController {
 		model.addAttribute("userAddresses", userAddresses);
 		if (account != null) {
 			model.addAttribute("account", account);
-			return "ChangeInfomation";
+			return "ChangeInfomation.html";
 		} else {
-			return "redirect:/login";
+			return "redirect:login.html";
 		}
 	}
 
@@ -80,7 +80,7 @@ public class PasswordController {
 
 		if (user == null) {
 			// Xử lý khi không tìm thấy người dùng
-			return "redirect:/login";
+			return "redirect:login.html";
 		}
 
 		if (provinceLabel == null || provinceLabel.isEmpty()

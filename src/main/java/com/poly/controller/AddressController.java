@@ -29,7 +29,7 @@ public class AddressController {
 
 		model.addAttribute("item", item);
 		model.addAttribute("addressItems", addressDAO.findAll());
-		return "addressAdmin";
+		return "addressAdmin.html";
 	}
 
 	@PostMapping("/addAddress")
@@ -113,7 +113,7 @@ public class AddressController {
 				|| wardLabel == null || wardLabel.isEmpty()
 				|| address == null || address.isEmpty()) {
 			model.addAttribute("messages", "Vui lòng điền đầy đủ thông tin để thêm địa chỉ");
-			return "forward:/ChangeInfomation";
+			return "forward:/ChangeInfomation.html";
 		} else {
 			String username = request.getRemoteUser();
 			Account user = accountDAO.findById(username).orElse(null);
@@ -126,7 +126,7 @@ public class AddressController {
 			ad.setWard(wardLabel);
 			ad.setStreet(address);
 			addressDAO.save(ad);
-			return "redirect:/ChangeInfomation";
+			return "redirect:/ChangeInfomation.html";
 		}
 
 	}

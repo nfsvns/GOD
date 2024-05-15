@@ -79,7 +79,7 @@ public class ProductController {
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
 
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop.html/search")
@@ -98,7 +98,7 @@ public class ProductController {
 		// Truy vấn danh sách hãng và số lượng sản phẩm tương ứng
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("shop.html/findByPrice")
@@ -108,14 +108,14 @@ public class ProductController {
 		if (priceRange == null || !priceRange.matches("\\d+-\\d+")) {
 			// Handle the case where priceRange is not valid, perhaps by setting default
 			// values or redirecting to an error page.
-			return "error"; // Replace "error" with the actual error view name
+			return "redirect:error"; // Replace "error" with the actual error view name
 		}
 
 		String[] priceValues = priceRange.split("-");
 		if (priceValues.length != 2 || priceValues[0] == null || priceValues[1] == null) {
 			// Handle the case where priceValues are not valid, perhaps by setting default
 			// values or redirecting to an error page.
-			return "error"; // Replace "error" with the actual error view name
+			return "redirect:error"; // Replace "error" with the actual error view name
 		}
 
 		try {
@@ -137,11 +137,11 @@ public class ProductController {
 			List<Object[]> results = dao.countProductsByCategory();
 			model.addAttribute("results", results);
 
-			return "shop";
+			return "shop.html";
 		} catch (NumberFormatException e) {
 			// Handle the case where parsing fails, perhaps by setting default values or
 			// redirecting to an error page.
-			return "error"; // Replace "error" with the actual error view name
+			return "redirect:error"; // Replace "error" with the actual error view name
 		}
 	}
 
@@ -173,7 +173,7 @@ public class ProductController {
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
 
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop.html/sort")
@@ -192,7 +192,7 @@ public class ProductController {
 		model.addAttribute("results", results);
 		List<DiscountProduct> discountProducts = dpDAO.findAll();
 		model.addAttribute("discountProducts", discountProducts);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop.html/sort1")
@@ -210,7 +210,7 @@ public class ProductController {
 		// Truy vấn danh sách hãng và số lượng sản phẩm tương ứng
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop.html/searchBrand")
@@ -229,7 +229,7 @@ public class ProductController {
 		// Truy vấn danh sách hãng và số lượng sản phẩm tương ứng
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop-single.html/{productId}")
@@ -249,7 +249,27 @@ public class ProductController {
 		List<Object[]> results = dao.countProductsByCategory();
 		model.addAttribute("results", results);
 		// Chắc chắn rằng listS chứa thông tin về số lượng của size
-		return "shop-single";
+		return "shop-single.html";
+	}
+
+	@RequestMapping("/shop-single-picture.html/{productId}")
+	public String getPicture(Model model, @PathVariable("productId") int productId) {
+		Product list = dao.findById(productId).get();
+		List<Size> listS = sizeDAO.findByIdProduct(productId);
+		List<DiscountProduct> discountProducts = dpDAO.findByIdProduct(productId);
+		List<Comment> comment = commentDAO.findByCommentId(productId);
+
+		List<Reply> reply = replyDAO.findByCommentProductId(productId);
+
+		model.addAttribute("reply", reply);
+		model.addAttribute("prod", list);
+		model.addAttribute("prodd", listS);
+		model.addAttribute("discountProducts", discountProducts);
+		model.addAttribute("comment", comment);
+		List<Object[]> results = dao.countProductsByCategory();
+		model.addAttribute("results", results);
+		// Chắc chắn rằng listS chứa thông tin về số lượng của size
+		return "shop-single-picture.html";
 	}
 
 	@GetMapping("/newArrivals")

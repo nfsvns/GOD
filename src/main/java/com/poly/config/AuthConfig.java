@@ -45,7 +45,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 				// .antMatchers("/history", "/revenue", "/account.html", "/orderDetail",
 				// "/productAdmin",
 				// "/categoryAdmin", "/report").hasAnyRole("DIRE", "STAF")
-				.antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
+				// .antMatchers("/assets/**").hasAnyRole("STAF", "ADMI")
 				.antMatchers("/check/**").authenticated()
 				.antMatchers("/shop.html/addComments/**").authenticated()
 				.antMatchers("/shop.html/replyComments**").authenticated()

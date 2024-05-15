@@ -34,6 +34,6 @@ public class ContactController {
 		}
 
 		// Chuyển hướng hoặc hiển thị trang cảm ơn
-		return "/contact.html"; // Điều hướng đến trang cảm ơn
+		return "contact.html"; // Điều hướng đến trang cảm ơn
 	}
 }

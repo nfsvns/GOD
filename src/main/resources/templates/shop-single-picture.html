@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
+>
+  <head>
+    <title th:text=" ${prod.name}"></title>
+
+    <meta charset="utf-8" />
+    <style>
+      .content {
+        padding-left: 20px;
+      }
+
+      .content p {
+        margin-bottom: 15px;
+        text-transform: lowercase;
+      }
+
+      .h6 {
+        font-weight: 500;
+      }
+    </style>
+  </head>
+
+  <body ng-app="app" ng-controller="cart-ctrl">
+    <div class="site-sectionn">
+      <div class="container be-vietnam">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Carousel -->
+
+            <!-- Carousel -->
+            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+              <!-- Indicators/dots -->
+              <ol class="carousel-indicators align-item-center">
+                <li
+                  th:each="i, iterStat : ${prod.images}"
+                  data-target="#demo"
+                  data-slide-to="[[${iterStat.index}]]"
+                  th:classappend="${iterStat.index == 0} ? 'active' : ''"
+                >
+                  <img
+                    th:src="@{|/images/${i.image}|}"
+                    class="d-block w-100 img-thumbnail"
+                    width="150%"
+                  />
+                </li>
+              </ol>
+
+              <!-- The slideshow/carousel -->
+              <div class="carousel-inner" style="align-items: center">
+                <div
+                  class="carousel-item"
+                  th:each="i, iterStat : ${prod.images}"
+                  th:classappend="${iterStat.index == 0} ? 'active' : ''"
+                >
+                  <img
+                    th:src="@{|/images/${i.image}|}"
+                    class="d-block w-100"
+                    style="border-radius: 50px"
+                  />
+                </div>
+              </div>
+
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-target="#demo"
+                data-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-target="#demo"
+                data-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+          <div class="col-md-6 mt-5" style="border-left: 1px dashed wheat">
+            <h3 th:text="${prod.name}" class="mb-3"></h3>
+
+            <div
+              class="p-3"
+              th:if="${prod.discountProduct != null and not #lists.isEmpty(prod.discountProduct)}"
+            >
+              <div
+                class="d-flex flex-row align-items-center"
+                th:if="${T(java.time.LocalDate).now().isAfter(prod.discountProduct[0].start_Date) and T(java.time.LocalDate).now().isBefore(prod.discountProduct[0].end_Date)
+						or  T(java.time.LocalDate).now() == prod.discountProduct[0].start_Date or T(java.time.LocalDate).now() == prod.discountProduct[0].end_Date}"
+              >
+                <span
+                  class="act-price"
+                  th:text="${prod.discountProduct[0].percentage + '%'}"
+                ></span>
+                <span
+                  class="price"
+                  th:text="${'$' + (prod.price - (prod.price * prod.discountProduct[0].percentage / 100))}"
+                ></span>
+                <small class="dis-price" th:text="${'$' + prod.price}"></small>
+                <span
+                  th:unless="${prod.discountProduct != null and not #lists.isEmpty(prod.discountProduct)}"
+                >
+                  <span
+                    style="font-weight: bold"
+                    th:text="${#numbers.formatInteger(prod.price, 2)} +' VND'"
+                  ></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Check if there are discount products -->
+            <div class="product-price mt-3">
+              <!-- Assuming prod.name contains the product name -->
+              <span
+                th:unless="${prod.discountProduct != null and not #lists.isEmpty(prod.discountProduct)}"
+              >
+                <span
+                  style="font-weight: bold"
+                  th:text="${#numbers.formatInteger(prod.price, 2)} +' VND'"
+                ></span>
+              </span>
+            </div>
+
+            <div class="btn-group m-2" role="group" aria-label="Chọn Size">
+              <span class="mb-1 mt-3" style="color: #333; font-weight: 500"
+                >Size :</span
+              >
+              <th:block th:if="${prodd.empty  || prodd.![sizes].isEmpty()}">
+                <div class="m-3">Sản phẩm này đã hết hàng.</div>
+              </th:block>
+              <th:block th:unless="${prodd.empty}">
+                <th:block th:each="size : ${#numbers.sequence(1,3)}">
+                  <th:block th:if="${prodd.![sizes].contains(size)}">
+                    <th:block th:each="item : ${prodd}">
+                      <th:block th:if="${item.sizes == size}">
+                        <th:block th:with="isInDatabase=true">
+                          <th:block th:if="${item.quantity > 0}">
+                            <button
+                              type="button"
+                              class="button-39 m-2"
+                              th:text="${size}"
+                              ng-click="getSize($event)"
+                            ></button>
+                          </th:block>
+                          <th:block th:if="${item.quantity == 0}">
+                            <button
+                              type="button"
+                              class="button-39 m-2"
+                              th:text="${size}"
+                            ></button>
+                          </th:block>
+                        </th:block>
+                      </th:block>
+                    </th:block>
+                  </th:block>
+                  <th:block th:unless="${prodd.![sizes].contains(size)}">
+                    <button
+                      type="button"
+                      class="button-39 disabled m-2" ng-disabled="true"
+                      th:text="${size}"
+                    ></button>
+                  </th:block>
+                </th:block>
+              </th:block>
+            </div>
+           
+            <br /> 
+             <span>*𝗟𝘂̛𝘂 𝘆́ : 𝗤𝘂𝘆́ 𝗸𝗵𝗮́𝗰𝗵 𝘃𝘂𝗶 𝗹𝗼̀𝗻𝗴 𝗰𝗵𝗼̣𝗻 𝘀𝗶𝘇𝗲 𝗹𝗮̀ 𝟭. 𝗫𝗶𝗻 𝗹𝗼̂̃𝗶 𝘃𝗲̂̀ 𝘀𝘂̛̣ 𝗯𝗮̂́𝘁 𝘁𝗶𝗲̣̂𝗻 𝗻𝗮̀𝘆 !</span>
+            <!-- <select ng-model="selectedSize" class="form-control mb-2 mt-3">
+						<option value="" disabled selected>Chọn Size</option>
+						<option th:each="item : ${prodd}" th:if="${item.quantity > 0}"
+							th:value="${item.sizes}" th:text="${item.sizes}"></option>
+					</select> -->
+            <div class="input-group mb-3">
+              <span class="m-2" style="color: #333; font-weight: 500"
+                >Số lượng :</span
+              >
+              <input
+                name="count"
+                class="form-control"
+                type="number"
+                min="1"
+                style="border: none; border-radius: 5px; padding: 8px 12px"
+                ng-model="quantity"
+                ng-init="quantity = 1"
+              />
+            </div>
+            <div class="cart mt-4 align-items-center">
+              <button
+                th:attr="ng-click=@{|cart.add(${prod.id})|}"
+                class="addCart btn btn-outline-dark text-uppercase mr-2 px-4"
+                style="font-weight: bold"
+              >
+                Thêm vào giỏ hàng
+              </button>
+            </div>
+            <div class="cart mt-4 align-items-center">
+              <a
+                href="/shop.html"
+                style="font-weight: bold"
+                class="addCart btn btn-outline-dark text-uppercase mr-2 px-4"
+                >Tiếp tục mua sắm
+              </a>
+            </div>
+            <div class="mt-3 be-vietnam">
+              <h4
+                class="dropdown-toggle"
+                data-bs-toggle="collapse"
+                href="#Policy"
+                style="color: #333; max-width: 120px; font-weight: 500;font-size: 100%;"
+              >
+                Mô tả sản phẩm
+              </h4>
+              <div class="collapse" id="Policy" >
+                <div class="content"style="font-size: 80%;">
+                  <h6 style="font-weight: bold">1. Kích thước: <span style="font-weight: lighter; font-size: smaller;">40x60 cm</span></h6>
+          
+                  <h6 style="font-weight: bold">2. Chất liệu:</h6>  
+                  <p>-	Tấm cốt: nhựa nguyên sinh PVC, độ dày lên đến 3.5 mm.</p>
+                  <p>-	Công nghệ in: in UV Nhật Bản</p>
+                  <p>-	Bề mặt: Phủ lớp PET tráng gương 0.3 rem siêu bóng giúp tranh sang trọng và đẳng cấp.</p>
+                  <p>-	Viền tranh: Composite với độ bền tốt theo thời gian.</p>
+                  <h6 style="font-weight: bold">3. Ưu điểm của tranh tráng gương:</h6>
+                  <p>-  Độ bền màu: hơn 10 năm</p>
+                  <p>-	Đặc điểm: Mang lại chiều sâu, sáng bóng, và vẻ đẹp độc đáo.</p>
+                  <p>-	Không gian trưng bày: Tranh tráng gương thường tạo cảm giác không gian rộng hơn.</p>
+                  <p>-	Khả năng chống nước: Có khả năng kháng nước nhưng hạn chế tối đa các trường hợp ẩm mốc.</p>
+                  <p>-	Khả năng bảo quản: Tranh tráng gương dễ lau chùi hơn trong khi tranh canvas có lớp phủ dầu giới hạn việc lau chùi.</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-5 be-vietnam">
+              <h4
+                class="dropdown-toggle"
+                data-bs-toggle="collapse"
+                href="#delivery"
+                style="color: #333; max-width: 120px; font-weight: 500 ;font-size: 100%;"
+              >
+                Hướng dẫn treo tranh
+              </h4>
+              <div class="collapse" id="delivery">
+                <div class="content">
+                  <img
+                    alt=""
+                    th:src="@{/images/guide.jpg}"
+                    width="100%"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mt-5 be-vietnam">
+              <h4
+                class="dropdown-toggle"
+                data-bs-toggle="collapse"
+                href="#deliveryPolicy"
+                style="color: #333; max-width: 120px; font-weight: 500;font-size: 100%;"
+              >
+                Chính sách vận chuyển và đổi trả
+              </h4>
+              <div class="collapse" id="deliveryPolicy">
+                <div class="content" style="font-size: 80%;">
+                  <br />
+                  <h6 style="font-weight: bold">1. Giao hàng tận nhà</h6>
+                  <p>
+                    - Miễn phí giao hàng với tất cả các đơn hàng trên toàn quốc.
+                  </p>
+                  <br />
+                  <h6 style="font-weight: bold">2. Thời gian giao hàng</h6>
+                  <p>
+                    - Đơn hàng sẽ được trao đến tận tay cho quý khách trung bình
+                    từ 3 đến 4 ngày sau khi chốt đơn hàng.
+                  </p>
+                  <br />
+                  <h6 style="font-weight: bold">3. Đổi trả</h6>
+                  <p>
+                    - Gian hàng sẽ chịu toàn bộ trách nhiệm về các rủi ro như
+                    mất mát hoặc hư hại của sản phẩm trong suốt quá trình vận
+                    chuyển từ kho đến khách hàng.
+                  </p>
+                  <p>
+                    - Nếu trong quá trình nhận hàng khách hàng thấy bất thường
+                    có thể liên hệ ngay bộ phận chăm sóc khách hàng của nhóm để
+                    xử lý ngay (hotline: 0922128168)
+                  </p>
+                  <p>
+                    - Hãy trả lại trong vòng 7 ngày kể từ ngày nhận được đơn
+                    hàng của bạn. Vui lòng đảm bảo mặt hàng vẫn giữ nguyên tình
+                    trạng ban đầu, với bao bì, tag sản phẩm và các phụ kiện đi
+                    kèm (nếu có) đầy đủ và nguyên vẹn. Nếu không thỏa các điều
+                    kiện trên chúng tôi xin phép không nhận đổi trả sản phẩm.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="border-bottom: groove" class="mt-5"></div>
+
+        <div class="container">
+          <!-- The Modal -->
+          <div class="modal" id="myModal">
+            <div class="modal-dialog" style="margin-top: 300px">
+              <div class="modal-content">
+                <!-- Modal body -->
+                <h5 class="text-center mb-2 mt-3">
+                  Thêm vào giỏ hàng thành công
+                </h5>
+                <div class="modal-body">
+                  <h3 class="text-center">
+                    <i
+                      class="fa-solid fa-success fa-check fa-2xl"
+                      style="color: red"
+                    ></i>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bootstrap 5.3.1 JavaScript (Popper.js là một phần bắt buộc của Bootstrap) -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@2.11.6/dist/umd/popper.min.js"></script>
+
+  
+  </body>
+</html>

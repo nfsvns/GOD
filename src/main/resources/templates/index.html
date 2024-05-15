@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
 >
   <head>
-    <title>𝔊𝔬𝔡 𝔉𝔞𝔱𝔥𝔢𝔯</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
   </head>
   <body>
     <div class="">
-      <img alt="" src="../../../image/banner.png" width="100%" height="100%" />
+      <img alt="" th:src="@{|images/banner-4.png|}" width="100%" height="100%" />
     </div>
 
     <div class="container mt-5 mb-3 be-vietnam" data-aos="fade-up">
@@ -24,13 +24,23 @@
         >
           <div class="product-card-shoe">
             <div class="product-image-container">
-              <a th:href="@{|/shop-single.html/${pro.id}|}">
+              <div th:if="${pro.images != null and not #lists.isEmpty(pro.images)}">
+                <a th:if="${pro.category.name == 'Tranh tráng gương'}" th:href="@{|shop-single-picture.html/${pro.id}|}">
                 <img
                   class="product-image-shoe"
-                  th:src="@{|/images/${pro.images[0].image}|}"
+                  th:src="@{|images/${pro.images[0].image}|}"
                   th:alt="${pro.name}"
                 />
               </a>
+              <a th:unless="${pro.category.name == 'Tranh tráng gương'}" th:href="@{|shop-single.html/${pro.id}|}">
+                <img  
+                  class="product-image-shoe"
+                  th:src="@{|images/${pro.images[0].image}|}"
+                  th:alt="${pro.name}"
+                />
+            </a>
+              </div>
+              
 
               <div
                 class="discount-badge-shoe"

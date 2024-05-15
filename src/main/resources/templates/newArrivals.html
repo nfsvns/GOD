@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+	th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}">
 <head>
-<title>New Arrivals</title>
+<title>The Godfather</title>
 
 <meta charset="utf-8">
 </head>
@@ -19,7 +19,7 @@
 					<div class="product-image-container">
 					<a th:href="@{|/shop-single.html/${newProduct.id}|}">
 					<img class="product-image-shoe img-fluid"
-							th:src="@{|/images/${newProduct.images[0].image}|}"
+							th:src="@{|images/${newProduct.images[0].image}|}"
 							th:alt="${newProduct.name}">
 					
 					</a>

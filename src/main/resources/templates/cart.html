@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
 >
   <head>
-    <title>Shoe Galaxy</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
   </head>
 
@@ -38,7 +38,7 @@
                   <th class="product-size">Size</th>
                   <th class="product-price">Giá</th>
                   <th class="product-quantity">Số lượng</th>
-                  <th class="product-total">Giá</th>
+                  <th class="product-total">Tổng</th>
                   <th class="product-remove">Xóa</th>
                 </tr>
               </thead>
@@ -84,7 +84,7 @@
             </table>
           </div>
           <span class="mt-0"
-            >*𝙇𝙪̛𝙪 𝙮́ : 𝙏𝙧𝙪̛𝙤̛́𝙘 𝙠𝙝𝙞 𝙩𝙞𝙚̂́𝙣 𝙝𝙖̀𝙣𝙝 𝙩𝙝𝙖̀𝙣𝙝 𝙩𝙤𝙖́𝙣 𝙦𝙪𝙮́ 𝙠𝙝𝙖́𝙘𝙝 𝙫𝙪𝙞 𝙡𝙤̀𝙣𝙜 𝙩𝙞𝙘𝙠 𝙫𝙖̀𝙤
+            >*𝙇𝙪̛𝙪 𝙮́ : 𝙏𝙧𝙪̛𝙤̛́𝙘 𝙠𝙝𝙞 𝙩𝙞𝙚̂́𝙣 𝙝𝙖̀𝙣𝙝 𝙩𝙝𝙖𝙣𝙝 𝙩𝙤𝙖́𝙣 𝙦𝙪𝙮́ 𝙠𝙝𝙖́𝙘𝙝 𝙫𝙪𝙞 𝙡𝙤̀𝙣𝙜 𝙩𝙞𝙘𝙠 𝙫𝙖̀𝙤
             𝙨𝙖̉𝙣 𝙥𝙝𝙖̂̉𝙢 𝙢𝙪𝙤̂́𝙣 𝙢𝙪𝙖</span
           >
           <!-- </form> -->
@@ -93,11 +93,6 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row mb-5">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <a href="/shop.html" class="btn btn-dark btn-sm btn-block"
-                  >Tiếp tục mua hàng</a
-                >
-              </div>
               <div class="col-md-6">
                 <a
                   ng-click="cart.clearAll()"
@@ -106,7 +101,7 @@
                 >
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <label class="text-black h4" for="coupon">Coupon</label>
                 <p>Nhập mã coupon</p>
@@ -117,13 +112,13 @@
                   class="form-control py-3"
                   id="coupon"
                   placeholder="Mã Coupon"
-                  disabled
+                  
                 />
               </div>
               <div class="col-md-4">
                 <button class="btn btn-dark btn-sm">Áp dụng</button>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="col-md-6 pl-5">
             <div class="row justify-content-end">
@@ -142,16 +137,12 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-12" ng-repeat="item in cart.items">
-                    <div ng-if="item.status == true ">
-                      <th:block th-if="item.status">
+                  <div class="col-md-12">                     
                         <a th:href="@{/check}">
                           <button class="btn btn-dark btn-lg py-3 btn-block">
                             Tiến hành thanh toán
                           </button>
                         </a>
-                      </th:block>
-                    </div>
                   </div>
                 </div>
               </div>

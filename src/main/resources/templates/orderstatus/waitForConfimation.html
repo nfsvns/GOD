@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+	th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}">
 
 
 <head>
@@ -19,33 +19,33 @@
 								<div class="row d-flex">
 									<div class="col-md-2">
 										<div>
-											<p class="small text-muted">Date</p>
+											<p class="small text-muted">Ngày đặt</p>
 											<p class="lead fw-normal mb-0"
 												th:text="${#dates.format(order.createDate, 'MM-dd-yyyy')}"></p>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div>
-											<p class="small text-muted">Customer Name</p>
+											<p class="small text-muted">Tên khách hàng</p>
 											<p class="lead fw-normal mb-0" th:text="${order.id}"></p>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div>
-											<p class="small text-muted">Address</p>
+											<p class="small text-muted">Địa chỉ</p>
 											<p class="lead fw-normal mb-0"
 												th:text="${#strings.substring(order.address, 0, 10) + '...'}"></p>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div>
-											<p class="small text-muted">Total Price</p>
+											<p class="small text-muted">Tổng tiền</p>
 											<p class="lead fw-normal mb-0" th:text="${order.tongtien}"></p>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div>
-											<p class="small text-muted">Status</p>
+											<p class="small text-muted">Trạng thái</p>
 											<p class="lead fw-normal mb-0" th:text="${order.status}"></p>
 										</div>
 									</div>
@@ -53,9 +53,8 @@
 										th:if="${order.status} == 'Đang Xác Nhận'">
 										<form method="post" action="/updateOrder">
 											<input type="hidden" name="orderId" th:value="${order.id}">
-											<p class="small text-muted">Action</p>
-											<button type="submit" class="btn btn-secondary">Cancel
-												order</button>
+											<p class="small text-muted">Hành động</p>
+											<button type="submit" class="btn btn-secondary">Hủy đơn hàng</button>
 										</form>
 									</div>
 
@@ -63,7 +62,7 @@
 										th:if="${order.status == 'Đã Hủy'}">
 										<input type="hidden" id="orderId" th:value="${order.id}">
 										<p class="small text-muted">Action</p>
-										<button class="btn btn-secondary" ng-click="getOrderDetails()">Repurchase</button>
+										<button class="btn btn-secondary" ng-click="getOrderDetails()">Thanh toán lại</button>
 
 
 
@@ -74,7 +73,7 @@
 										th:if="${order.status == 'Đã Giao'}">
 										<input type="hidden" id="orderId" th:value="${order.id}">
 										<p class="small text-muted">Action</p>
-										<button class="btn btn-secondary" ng-click="getOrderDetails()">Repurchase</button>
+										<button class="btn btn-secondary" ng-click="getOrderDetails()">Thanh toán lại</button>
 
 
 
@@ -86,7 +85,7 @@
 
 								<button
 									class="btn col-sm-2 btn-dark text-light btn-sm mt-2 reply-btn"
-									data-comment-id="${order.id}">View Product Details</button>
+									data-comment-id="${order.id}">Chi tiết đơn hàng</button>
 								<br>
 
 								<div class="reply-form card border-0"
@@ -97,34 +96,34 @@
 										<!-- Display order details here -->
 										<div class="col-md-2 d-flex justify-content-center">
 											<div>
-												<p class="small text-muted mb-4 pb-2">OrderId</p>
+												<p class="small text-muted mb-4 pb-2">Mã đơn hàng</p>
 												<p class="lead fw-normal mb-0"
 													th:text="${orderDetail.order.id}"></p>
 											</div>
 										</div>
 										<div class="col-md-2 d-flex justify-content-center">
 											<div>
-												<p class="small text-muted pb-2">Image</p>
+												<p class="small text-muted pb-2">Ảnh</p>
 												<span th:each="pro : ${products}"> <span
 													th:if="${pro.id == orderDetail.product.id}"> <img
 														th:if="${pro.images != null &amp;&amp; pro.images.size() &gt; 0}"
 														class="img-fluid" alt="Generic placeholder image"
 														style="width: 30%"
-														th:src="@{|/images/${pro.images[0].image}|}">
+														th:src="@{|images/${pro.images[0].image}|}">
 												</span>
 												</span>
 											</div>
 										</div>
 										<div class="col-md-2 d-flex justify-content-center">
 											<div>
-												<p class="small truncate mb-4 pb-2">Name</p>
+												<p class="small truncate mb-4 pb-2">Tên sản phẩm</p>
 												<p class="lead fw-normal mb-0"
 													th:text="${orderDetail.product.name}"></p>
 											</div>
 										</div>
 										<div class="col-md-2 d-flex justify-content-center">
 											<div>
-												<p class="small text-muted mb-4 pb-2">Price</p>
+												<p class="small text-muted mb-4 pb-2">Giá</p>
 												<p class="lead fw-normal mb-0"
 													th:text="${orderDetail.price}"></p>
 											</div>
@@ -137,7 +136,7 @@
 										</div>
 										<div class="col-md-2 d-flex justify-content-center">
 											<div>
-												<p class="small text-muted mb-4 pb-2">Quantity</p>
+												<p class="small text-muted mb-4 pb-2">Số lượng</p>
 												<p class="lead fw-normal mb-0"
 													th:text="${orderDetail.quantity}"></p>
 											</div>
@@ -163,13 +162,13 @@
 				if (isFormDisplayed) {
 					console.log("123");
 					$('.reply-form').hide();
-					$(this).text('View Product Details');
+					$(this).text('Chi tiết đơn hàng');
 					isFormDisplayed = false;
 				} else {
 					$('.reply-form').hide();
 					console.log("123");
 					$(this).siblings('.reply-form').show();
-					$(this).text('Turn Off View Product Details');
+					$(this).text('Tắt chi tiết đơn hàng');
 					isFormDisplayed = true;
 				}
 			});

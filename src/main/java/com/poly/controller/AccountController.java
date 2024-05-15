@@ -24,7 +24,7 @@ public class AccountController {
 	@RequestMapping("/forgetPassword")
 	public String forgetHome(Model model) {
 
-		return "forget";
+		return "forget.html";
 	}
 
 	@PostMapping("/forgetPassword/success")
@@ -70,6 +70,6 @@ public class AccountController {
 
 			mailerService.queue(mail);
 		}
-		return "redirect:/login";
+		return "login.html";
 	}
 }

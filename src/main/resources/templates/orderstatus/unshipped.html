@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+	th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}">
 <head>
 <title>Đang Giao Hàng</title>
 <meta charset="UTF-8">
@@ -105,7 +105,7 @@
 															th:if="${pro.images != null &amp;&amp; pro.images.size() &gt; 0}"
 															class="img-fluid" alt="Generic placeholder image"
 															style="width: 30%"
-															th:src="@{|/images/${pro.images[0].image}|}">
+															th:src="@{|images/${pro.images[0].image}|}">
 													</span>
 													</span>
 												</div>

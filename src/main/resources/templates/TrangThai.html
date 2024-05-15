@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	th:fragment="order(title, view)"
-	th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+	th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}">
 <head>
 
 <title>Trạng thái đơn hàng</title>
@@ -12,19 +12,19 @@
 		<div class="row p-4">
 			<div class="col-3 text-center ">
 				<a class="ka" style="border-bottom: 1px solid #ee83e5;"
-					th:href="@{/TrangThai}">Ordered</a>
+					th:href="@{/TrangThai}">Đã đặt</a>
 			</div>
 			<div class="col-3 text-center ">
 				<a class="ka" style="border-bottom: 1px solid #ee83e5;"
-					th:href="@{/allOrders}">Wait for confirmation</a>
+					th:href="@{/allOrders}">Chờ xác nhận</a>
 			</div>
 			<div class="col-3 text-center ">
 				<a class="ka" th:href="@{/unshipped}"
-					style="text-decoration: none; color: black;"> On the way</a>
+					style="text-decoration: none; color: black;"> Đang giao</a>
 			</div>
 			<div class="col-3 text-center">
 				<a class="ka" th:href="@{/shipped}"
-					style="text-decoration: none; color: black;">Shipped</a>
+					style="text-decoration: none; color: black;">Đã giao</a>
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@
 								<div class="col-md-2 d-flex justify-content-center">
 									<div>
 										<p>
-										<p class="small text-muted mb-4 pb-2">Name</p>
+										<p class="small text-muted mb-4 pb-2">Tên sản phẩm</p>
 										<p class="lead fw-normal mb-0">{{item.name}}</p>
 									</div>
 								</div>
@@ -58,13 +58,13 @@
 								</div>
 								<div class="col-md-2 d-flex justify-content-center">
 									<div>
-										<p class="small text-muted mb-4 pb-2">Quantity</p>
+										<p class="small text-muted mb-4 pb-2">Số lượng</p>
 										<p class="lead fw-normal mb-0">{{item.qty}}</p>
 									</div>
 								</div>
 								<div class="col-md-2 d-flex justify-content-center">
 									<div>
-										<p class="small text-muted mb-4 pb-2">Price</p>
+										<p class="small text-muted mb-4 pb-2">Giá</p>
 										<p class="lead fw-normal mb-0">${{cart.price_product(item)}}</p>
 									</div>
 								</div>
@@ -78,7 +78,7 @@
 
 							<div class="float-end">
 								<p class="mb-0 me-5 d-flex align-items-center">
-									<span class="small text-muted me-2">Order total:</span> <span
+									<span class="small text-muted me-2">Tổng đơn hàng:</span> <span
 										class="lead fw-normal">${{cart.amount | number : 2}}</span>
 								</p>
 							</div>

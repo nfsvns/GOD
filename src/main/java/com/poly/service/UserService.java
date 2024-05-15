@@ -91,15 +91,16 @@ public class UserService implements UserDetailsService {
 			authority.setRole(role);
 			authorityDAO.save(authority);
 
-			MailInfo mail = new MailInfo();
-			mail.setTo(email);
-			mail.setSubject("Chào mừng đăng kí tài khoản tại web Shoe Galaxy thành công");
-			StringBuilder bodyBuilder = new StringBuilder();
-			bodyBuilder.append("Đây là mật khẩu của bạn ").append(password)
-					.append(" . Bạn có đổi mật khẩu tại phần thông tin cá nhân");
-			mail.setBody(bodyBuilder.toString());
+			// MailInfo mail = new MailInfo();
+			// mail.setTo(email);
+			// mail.setSubject("Chào mừng đăng kí tài khoản tại web Shoe Galaxy thành
+			// công");
+			// StringBuilder bodyBuilder = new StringBuilder();
+			// bodyBuilder.append("Đây là mật khẩu của bạn ").append(password)
+			// .append(" . Bạn có đổi mật khẩu tại phần thông tin cá nhân");
+			// mail.setBody(bodyBuilder.toString());
 
-			mailerService.queue(mail);
+			// mailerService.queue(mail);
 
 			UserDetails userDetails = User.withUsername(email).password(pe.encode(password)).roles("GUEST").build();
 			Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, password,

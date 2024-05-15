@@ -1,8 +1,8 @@
-app.controller("discount-ctrl", function($scope, $http) {
+app.controller("discount-ctrl", function ($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 
-	$scope.initialize = function() {
+	$scope.initialize = function () {
 		$http.get("/rest/discountCode").then(resp => {
 			$scope.categories = resp.data;
 		})
@@ -16,12 +16,12 @@ app.controller("discount-ctrl", function($scope, $http) {
 		$scope.reset(); //để có hình mây lyc1 mới đầu
 		$scope.loadCurrentUser();
 	}
-	$scope.loadCurrentUser = function() {
-    $http.get("/rest/accounts/current-account").then(resp => {
-        $scope.account = resp.data;
-    }); 
-};
-	$scope.create = function() {
+	$scope.loadCurrentUser = function () {
+		$http.get("/rest/accounts/current-account").then(resp => {
+			$scope.account = resp.data;
+		});
+	};
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
 
 
@@ -42,26 +42,26 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.form = angular.copy(item);
 		$scope.form.start_Date = new Date(item.start_Date);
 		$scope.form.end_Date = new Date(item.end_Date);
 		$(".nav-tabs a:eq(0)").tab("show");
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {
 			available: true,
 		}
 	}
 
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
 		if (item.start_Date > item.end_Date) {
 			alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc!");
 			return; // Ngừng hàm và không tiến hành tạo mới
 		}
-		
+
 		$http.put(`/rest/discountCode/${item.id}`, item).then(resp => {
 			var index = $scope.items.findIndex(p => p.id == item.id);
 			$scope.items[index] = item;
@@ -73,12 +73,14 @@ app.controller("discount-ctrl", function($scope, $http) {
 			});
 	}
 
-	$scope.delete = function(item) {
-		if (confirm("Bạn muốn xóa lịch sử đơn hàng này?")) {
+	$scope.delete = function (item) {
+		if (confirm("Xóa sản phẩm có chứa mã giảm này trước khi xóa mã giảm?")) {
 			$http.delete(`/rest/discountCode/${item.id}`).then(resp => {
 				var index = $scope.items.findIndex(p => p.id == item.id);
-				$scope.items.splice(index, 1);
-				$scope.reset();
+				if (index !== -1) {
+					$scope.items[index].available = false;
+					$scope.reset();
+				}
 				alert("Xóa lịch sử đơn hàng thành công!");
 			}).catch(error => {
 				alert("Lỗi xóa lịch sử đơn hàng!");

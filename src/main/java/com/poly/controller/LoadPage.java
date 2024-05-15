@@ -59,7 +59,7 @@ public class LoadPage {
 		String path = request.getServletPath();
 
 		if ("/contact.html".equals(path)) {
-			return "contact";
+			return "contact.html";
 
 		} else if ("/about.html".equals(path)) {
 			return "about";
@@ -73,7 +73,7 @@ public class LoadPage {
 			return "ChangePassword";
 		}
 
-		return "error";
+		return "error.html";
 	}
 
 	@RequestMapping({ "/", "index.html" })

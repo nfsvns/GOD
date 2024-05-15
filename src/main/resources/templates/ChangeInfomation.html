@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}">
+      th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}">
 <head>
     <title>Thay đổi thông tin cá nhân</title>
     <meta charset="utf-8">
@@ -26,7 +26,7 @@
             <div class="avatar avatar-xl position-relative">
             <!--   <img id="imagePreview" src="/images/hoan.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm"> -->
             
-               <img class="w-25 h-50 border-radius-lg shadow-sm" id="imagePreview" th:src="@{'/images/' + ${account.photo}}"  alt="Avatar">
+               <img class="w-25 h-50 border-radius-lg shadow-sm" id="imagePreview" th:src="@{'images/' + ${account.photo}}"  alt="Avatar">
             
             </div>
             <h5 class="mb-1 my-2" id="fullname" name="fullname" th:text="${account != null ? account.fullname : ''}" style="font-family: Arial, sans-serif; font-size: 20px; margin-left: -1px; bottom:50;">

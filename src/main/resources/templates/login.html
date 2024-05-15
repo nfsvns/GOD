@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
 >
   <head>
-    <title>Shoe Galaxy</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -21,8 +21,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0">
-            <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
-            <strong class="text-black">Login</strong>
+            <a href="index.html">Trang chủ</a> <span class="mx-2 mb-0">/</span>
+            <strong class="text-black">Đăng nhập</strong>
           </div>
         </div>
       </div>
@@ -31,17 +31,17 @@
     <div class="site-section">
       <div class="container">
         <!-- Form-->
-        <div class="form">
+   
           <div class="form-toggle"></div>
           <div class="form-panel one">
             <div class="form-header">
-              <h1>Account Login</h1>
+              <h1>Đăng nhập tài khoản</h1>
             </div>
             <div class="form-content">
-              <form action="/login/success" method="post">
+              <form action="login/success" method="post">
                 <p class="text-danger">[[${message}]] [[${param.error}]]</p>
                 <div class="form-group">
-                  <label for="username">Username</label>
+                  <label for="username">Tên đăng nhập</label>
                   <input
                     id="username"
                     type="text"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="form-group" style="position: relative">
-                  <label for="password">Password</label>
+                  <label for="password">Mật khẩu</label>
                   <input
                     id="password"
                     type="password"
@@ -73,33 +73,33 @@
 
                 <div class="form-group">
                   <label class="form-remember">
-                    <input type="checkbox" />Remember Me
+                    <input type="checkbox" />Ghi nhớ mật khẩu
                   </label>
                   <a class="form-recovery" href="/forgetPassword"
-                    >Forgot Password?</a
+                    >Quên mật khẩu ?</a
                   >
                 </div>
                 <div class="form-group">
                   <label class="form-remember">
-                    Don't have an account?
+                    Không có tài khoản ?
                     <a
                       class="form-recovery"
                       href="/register.html"
                       th:text="#{nav.register}"
-                      >Register</a
+                      >Đăng ký</a
                     >
-                    now
+                    bây giờ
                   </label>
                 </div>
                 <div class="form-group">
-                  <button type="submit">Log In</button>
+                  <button type="submit">Đăng nhập</button>
                 </div>
                 <!-- <a type="button" class="btn btn-outline-danger w-100 mb-3" href="/oauth2/authorization/google">Google</a>
                 <a type="button" class="btn btn-outline-primary w-100" href="/oauth2/authorization/facebook">Facebook</a> -->
               </form>
             </div>
           </div>
-        </div>
+     
       </div>
     </div>
 

@@ -25,13 +25,13 @@ public class CategoryController {
 
         model.addAttribute("item", item);
         model.addAttribute("categoryItems", cateDAO.findAll());
-        return "categoryAdmin";
+        return "categoryAdmin.html";
     }
 
     @RequestMapping("/categoryAdmin/create")
     public String create(Category item) {
         cateDAO.save(item);
-        return "redirect:/categoryAdmin";
+        return "redirect:/categoryAdmin.html";
     }
 
     @RequestMapping("/categoryAdmin/update")
@@ -43,7 +43,7 @@ public class CategoryController {
     @RequestMapping("/categoryAdmin/delete/{id}")
     public String delete(@PathVariable("id") String id) {
         cateDAO.deleteById(id);
-        return "redirect:/categoryAdmin";
+        return "redirect:/categoryAdmin.html";
     }
 
     @RequestMapping("/categoryAdmin/edit/{id}")
@@ -52,6 +52,6 @@ public class CategoryController {
         model.addAttribute("item", item);
         List<Category> items = cateDAO.findAll();
         model.addAttribute("categoryItems", items);
-        return "categoryAdmin";
+        return "categoryAdmin.html";
     }
 }

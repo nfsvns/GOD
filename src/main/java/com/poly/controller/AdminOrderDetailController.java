@@ -26,7 +26,7 @@
 //		Account user = sessionService.getAttribute("user");
 //		if(!user.getAdmin()) {			
 //			String error="Khong du quyen truy cap ";
-//			return "redirect:/login.html?error="+error;
+//			return "redirect:login.html?error="+error;
 //		}
 //		model.addAttribute("orderDetailItems", orderDetailDAO.findAll());
 //		return "orderDetailAdmin";

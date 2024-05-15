@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.context.annotation.SessionScope;
+import org.thymeleaf.expression.Lists;
 
 import com.poly.entity.Product;
 import com.poly.entity.Report;
@@ -30,6 +31,9 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT new Report(o.category.name, sum(o.price), count(o) )" + " FROM Product o"
 			+ " GROUP BY o.category.name" + " ORDER BY sum(o.price) DESC")
 	List<Report> getInventoryByCategory();
+
+	@Query(value = "Select * from Products where category_id = 'TRA'", nativeQuery = true)
+	List<Product> findAllbyCategoryId();
 
 	@Query("SELECT p FROM Product p  LEFT JOIN p.discountProduct dp")
 	Page<Product> findAllProductsAndDiscounts(Pageable pageable);

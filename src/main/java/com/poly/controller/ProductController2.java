@@ -37,43 +37,42 @@ public class ProductController2 {
 			List<Product> list = productService.findByCategoryId(cid.get());
 			model.addAttribute("items", list);
 		}
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
-
 		Product item = productService.findById(id);
 		model.addAttribute("item", item);
-		return "shop-single";
+		return "shop-single.html";
 	}
 
 	@RequestMapping("/shop/detail/sortASC")
 	public String sortNameASC(Model model) {
 		List<Product> list = productService.sortProductASC();
 		model.addAttribute("items", list);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop/detail/sortDesc")
 	public String sortNameDesc(Model model) {
 		List<Product> list = productService.sortProductDesc();
 		model.addAttribute("items", list);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop/detail/sortPriceLtoH")
 	public String sortPriceAsc(Model model) {
 		List<Product> list = productService.sortPriceLowToHight();
 		model.addAttribute("items", list);
-		return "shop";
+		return "shop.html";
 	}
 
 	@RequestMapping("/shop/detail/sortPriceHtoL")
 	public String sortPriceDesc(Model model) {
 		List<Product> list = productService.sortPriceHightToLow();
 		model.addAttribute("items", list);
-		return "shop";
+		return "shop.html";
 	}
 
 }

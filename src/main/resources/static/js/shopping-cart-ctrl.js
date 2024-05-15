@@ -1,6 +1,6 @@
 
 const app = angular.module("app", [])
-app.controller("cart-ctrl", function($scope, $http, $window) {
+app.controller("cart-ctrl", function ($scope, $http, $window) {
 	$scope.cart = [];
 
 	$scope.selectedSize = '';
@@ -9,7 +9,7 @@ app.controller("cart-ctrl", function($scope, $http, $window) {
 		var modal = document.getElementById('myModal');
 		modal.classList.add('show');
 		modal.style.display = 'block';
-		setTimeout(function() {
+		setTimeout(function () {
 			var modal = document.getElementById('myModal');
 			modal.classList.remove('show');
 			modal.style.display = 'none';
@@ -19,7 +19,7 @@ app.controller("cart-ctrl", function($scope, $http, $window) {
 
 
 	//  check size lúc click vào button. 
-	$scope.getSize = function(event) {
+	$scope.getSize = function (event) {
 
 		// lấy id sản phẩm từ URL sau dấu / 
 		var urlParts = window.location.href.split('/');
@@ -50,84 +50,84 @@ app.controller("cart-ctrl", function($scope, $http, $window) {
 
 	}
 
-$scope.totalCount = 0; // Khai báo biến totalCount trong $scope
-$scope.getOrderDetails = function() {
-    var buttons = document.getElementsByClassName('btn-secondary');
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function(event) {
-            var orderId = event.currentTarget.parentNode.querySelector('#orderId').value;
+	$scope.totalCount = 0; // Khai báo biến totalCount trong $scope
+	$scope.getOrderDetails = function () {
+		var buttons = document.getElementsByClassName('btn-secondary');
+		for (var i = 0; i < buttons.length; i++) {
+			buttons[i].addEventListener('click', function (event) {
+				var orderId = event.currentTarget.parentNode.querySelector('#orderId').value;
 
-            $http.get(`/rest/products/repurchase/${orderId}`)
-                .then(function(response) {
-                    var orderDetails = response.data.orderDetails;
-                    $scope.cart.items = [];
-                    if (orderDetails && orderDetails.length > 0) {
-                        for (var j = 0; j < orderDetails.length; j++) {
-                            (function(orderDetail) {
-                                var spanElement = document.getElementById('remoteUi');
-                                var spanText = spanElement !== null ? spanElement.innerText : null;
-                                console.log(spanText);
-                                var accountData = null;
-                                var productData = null;
-                                $http.get(`/rest/accounts/${spanText}`).then(function(account) {
-                                    accountData = account.data;
-                                    $http.get(`/rest/products/${orderDetail.id}`).then(function(product) {
-                                        productData = product.data;
+				$http.get(`/rest/products/repurchase/${orderId}`)
+					.then(function (response) {
+						var orderDetails = response.data.orderDetails;
+						$scope.cart.items = [];
+						if (orderDetails && orderDetails.length > 0) {
+							for (var j = 0; j < orderDetails.length; j++) {
+								(function (orderDetail) {
+									var spanElement = document.getElementById('remoteUi');
+									var spanText = spanElement !== null ? spanElement.innerText : null;
+									console.log(spanText);
+									var accountData = null;
+									var productData = null;
+									$http.get(`/rest/accounts/${spanText}`).then(function (account) {
+										accountData = account.data;
+										$http.get(`/rest/products/${orderDetail.id}`).then(function (product) {
+											productData = product.data;
 
-                                        $http.get(`/rest/products/${orderDetail.id}/price`).then(function(totalAmount) {
-                                            if (totalAmount.data.length > 0) {
-                                                productData.percentage = totalAmount.data[0].percentage;
-                                            } else {
-                                                productData.percentage = 0; // Nếu không có giảm giá, đặt percentage = 0
-                                            }
+											$http.get(`/rest/products/${orderDetail.id}/price`).then(function (totalAmount) {
+												if (totalAmount.data.length > 0) {
+													productData.percentage = totalAmount.data[0].percentage;
+												} else {
+													productData.percentage = 0; // Nếu không có giảm giá, đặt percentage = 0
+												}
 
-                                            var itemPrice = orderDetail.price;
+												var itemPrice = orderDetail.price;
 
-                                            // Nếu có giảm giá, tính giá mới
-                                            if (productData.percentage > 0) {
-                                                itemPrice = itemPrice - (itemPrice * productData.percentage / 100);
-                                            }
+												// Nếu có giảm giá, tính giá mới
+												if (productData.percentage > 0) {
+													itemPrice = itemPrice - (itemPrice * productData.percentage / 100);
+												}
 
-                                            var data = {
-                                                account: accountData,
-                                                product: productData,
-                                                image: orderDetail.image,
-                                                name: orderDetail.name,
-                                                size: orderDetail.sizes,
-                                                price: itemPrice,
-                                                qty: orderDetail.qty,
-                                                total: orderDetail.price * orderDetail.qty,
-                                                status: true,
-                                            };
-                                            $http({
-                                                method: 'POST',
-                                                url: '/rest/carts',
-                                                data: data
-                                            }).then(function(response) {
-                                                console.log("Dữ liệu đã được lưu vào cơ sở dữ liệu", response.data);
-                                            }).catch(function(error) {
-                                                console.error("Lỗi khi lưu dữ liệu vào cơ sở dữ liệu: ", error);
-                                            });
-                                            $window.location.reload();
-                                            window.location.href = 'http://localhost:8080/cart.html';
-                                        });
-                                    });
-                                    console.log(orderDetail);
-                                    $scope.cart.items.push(orderDetail);
-                                });
-                            })(orderDetails[j]);
-                        }
-                    } else {
-                        console.log("No order details found");
-                    }
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
-            event.currentTarget.removeEventListener('click', this);
-        });
-    }
-};
+												var data = {
+													account: accountData,
+													product: productData,
+													image: orderDetail.image,
+													name: orderDetail.name,
+													size: orderDetail.sizes,
+													price: itemPrice,
+													qty: orderDetail.qty,
+													total: orderDetail.price * orderDetail.qty,
+													status: true,
+												};
+												$http({
+													method: 'POST',
+													url: '/rest/carts',
+													data: data
+												}).then(function (response) {
+													console.log("Dữ liệu đã được lưu vào cơ sở dữ liệu", response.data);
+												}).catch(function (error) {
+													console.error("Lỗi khi lưu dữ liệu vào cơ sở dữ liệu: ", error);
+												});
+												$window.location.reload();
+												window.location.href = 'http://localhost:8080/cart.html';
+											});
+										});
+										console.log(orderDetail);
+										$scope.cart.items.push(orderDetail);
+									});
+								})(orderDetails[j]);
+							}
+						} else {
+							console.log("No order details found");
+						}
+					})
+					.catch(function (error) {
+						console.error(error);
+					});
+				event.currentTarget.removeEventListener('click', this);
+			});
+		}
+	};
 
 
 
@@ -295,9 +295,9 @@ $scope.getOrderDetails = function() {
 						method: 'POST',
 						url: '/rest/carts',
 						data: data
-					}).then(function(response) {
+					}).then(function (response) {
 						console.log("Dữ liệu đã được lưu vào cơ sở dữ liệu", response.data);
-					}).catch(function(error) {
+					}).catch(function (error) {
 						console.error("Lỗi khi lưu dữ liệu vào cơ sở dữ liệu: ", error);
 					});
 				});
@@ -443,75 +443,75 @@ $scope.getOrderDetails = function() {
 })
 // Cập nhật API mới
 const apiPro = `https://vapi.vnappmob.com/api/province`;
-    const apiDis = `https://vapi.vnappmob.com/api/province/district/`;
-    const apiWar = `https://vapi.vnappmob.com/api/province/ward/`;
+const apiDis = `https://vapi.vnappmob.com/api/province/district/`;
+const apiWar = `https://vapi.vnappmob.com/api/province/ward/`;
 
-    var callApiProvine = () => {
-        return axios.get(apiPro)
-            .then((response) => {
-                renderData(response.data.results, "province");
-            })
-            .catch((error) => {
-                console.error("Error fetching province data:", error);
-            });
-    }
+var callApiProvine = () => {
+	return axios.get(apiPro)
+		.then((response) => {
+			renderData(response.data.results, "province");
+		})
+		.catch((error) => {
+			console.error("Error fetching province data:", error);
+		});
+}
 
-    var callApiDistrict = (province_id) => {
-        return axios.get(`${apiDis}${province_id}`)
-            .then((response) => {
-                renderDataDis(response.data.results, "district");
-            })
-            .catch((error) => {
-                console.error("Error fetching district data:", error);
-            });
-    }
+var callApiDistrict = (province_id) => {
+	return axios.get(`${apiDis}${province_id}`)
+		.then((response) => {
+			renderDataDis(response.data.results, "district");
+		})
+		.catch((error) => {
+			console.error("Error fetching district data:", error);
+		});
+}
 
-    var callApiWard = (district_id) => {
-        return axios.get(`${apiWar}${district_id}`)
-            .then((response) => {
-                renderWar(response.data.results, "ward");
-            })
-            .catch((error) => {
-                console.error("Error fetching ward data:", error);
-            });
-    }
+var callApiWard = (district_id) => {
+	return axios.get(`${apiWar}${district_id}`)
+		.then((response) => {
+			renderWar(response.data.results, "ward");
+		})
+		.catch((error) => {
+			console.error("Error fetching ward data:", error);
+		});
+}
 
-    var renderData = (array, select) => {
-        let row = '<option value="">Chọn Tỉnh/Thành phố</option>';
-        array.forEach(element => {
-            row += `<option data-code="${element.province_id}" value="${element.province_name}">${element.province_name}</option>`;
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
-    var renderDataDis = (array, select) => {
-        let row = '<option value="">Chọn Quận</option>';
-        array.forEach(element => {
-            row += `<option data-code="${element.district_id}" value="${element.district_name}">${element.district_name}</option>`;
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
-    var renderWar = (array, select) => {
-        let row = '<option value="">Chọn phường</option>';
-        array.forEach(element => {
-            row += `<option data-code="${element.ward_id}" value="${element.ward_name}">${element.ward_name}</option>`;
-        });
-        document.querySelector("#" + select).innerHTML = row;
-    }
+var renderData = (array, select) => {
+	let row = '<option value="">Chọn Tỉnh/Thành phố</option>';
+	array.forEach(element => {
+		row += `<option data-code="${element.province_id}" value="${element.province_name}">${element.province_name}</option>`;
+	});
+	document.querySelector("#" + select).innerHTML = row;
+}
+var renderDataDis = (array, select) => {
+	let row = '<option value="">Chọn Quận</option>';
+	array.forEach(element => {
+		row += `<option data-code="${element.district_id}" value="${element.district_name}">${element.district_name}</option>`;
+	});
+	document.querySelector("#" + select).innerHTML = row;
+}
+var renderWar = (array, select) => {
+	let row = '<option value="">Chọn phường</option>';
+	array.forEach(element => {
+		row += `<option data-code="${element.ward_id}" value="${element.ward_name}">${element.ward_name}</option>`;
+	});
+	document.querySelector("#" + select).innerHTML = row;
+}
 
-    // Gọi hàm để lấy danh sách tỉnh/thành phố ban đầu
-    callApiProvine();
+// Gọi hàm để lấy danh sách tỉnh/thành phố ban đầu
+callApiProvine();
 
-    // Gọi hàm để lấy danh sách quận/huyện khi chọn tỉnh/thành phố
-   // Gọi hàm để lấy danh sách quận/huyện khi chọn tỉnh/thành phố
+// Gọi hàm để lấy danh sách quận/huyện khi chọn tỉnh/thành phố
+// Gọi hàm để lấy danh sách quận/huyện khi chọn tỉnh/thành phố
 $("#province").change(() => {
-    let selectedProvinceId = $("#province option:selected").data('code');
-    callApiDistrict(selectedProvinceId);
+	let selectedProvinceId = $("#province option:selected").data('code');
+	callApiDistrict(selectedProvinceId);
 });
 
 // Gọi hàm để lấy danh sách phường/xã khi chọn quận/huyện
 $("#district").change(() => {
-    let selectedDistrictId = $("#district option:selected").data('code');
-    callApiWard(selectedDistrictId);
+	let selectedDistrictId = $("#district option:selected").data('code');
+	callApiWard(selectedDistrictId);
 });
 
 

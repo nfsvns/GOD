@@ -1,115 +1,73 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{/layout/layout.html::dynamic(~{::title}, ~{::body})}"
+  th:replace="~{layout/layout.html::dynamic(~{::title}, ~{::body})}"
 >
   <head>
-    <title>Shoe Galaxy</title>
+    <title>The Godfather</title>
     <meta charset="utf-8" />
   </head>
   <body>
-    <div class="bg-light py-3">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 mb-0">
-            <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
-            <strong class="text-black">Register</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-section">
-      <div class="container">
+    <div class="site-section mb-5">
+      <div class="container mb-5">
         <!-- Form-->
-        <div class="form">
           <div class="form-toggle"></div>
           <div class="form-panel one">
             <div class="form-header">
-              <h1>Register</h1>
+              <h1>Đăng ký</h1>
             </div>
             <div class="form-content">
-              <form th:action="@{/register/success}" method="post">
-                <p class="text-danger">[[${message}]] [[${param.error}]]</p>
+              <form th:action="@{/register/success}" method="post"
+                th:object="${account}">
+                <p class="text-danger">[[${message}]]</p>
                 <div class="form-group">
-                  <label for="username">Username</label>
-                  <input
-                    id="username"
-                    placeholder="Username"
-                    type="text"
-                    name="username"
-                    th:value="${username}"
-                    required="required"
-                  />
+                  <label for="username">Tên đăng nhập</label> <input id="username"
+                    placeholder="Username" type="text" name="username"
+                    th:field="*{username}" /> <i class="text-danger"
+                    th:errors="*{username}"></i>
                   <c:if test="${not empty error}">
                     <div class="form-text text-danger">[[${error}]]</div>
                   </c:if>
                 </div>
                 <div class="form-group">
-                  <label for="fullname">Fullname</label>
-                  <input
-                    id="fullname"
-                    placeholder="Fullname"
-                    type="text"
-                    name="fullname"
-                    th:value="${fullname}"
-                    required="required"
-                  />
+                  <label for="fullname">Tên người dùng</label> <input id="fullname"
+                    placeholder="Fullname" type="text" name="fullname"
+                    th:field="*{fullname}" /> <i class="text-danger"
+                    th:errors="*{fullname}"></i>
                 </div>
                 <div class="form-group">
-                  <label for="fullname">Email</label>
-                  <input
-                    id="email"
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    required="required"
-                  />
+                  <label for="fullname">Email</label> <input id="email"
+                    placeholder="Email" type="text" name="email"
+                    th:field="*{email}" /> <i class="text-danger"
+                    th:errors="*{email}"></i>
+                  <c:if test="${not empty errorm}">
+                    <div class="form-text text-danger">[[${errorm}]]</div>
+                  </c:if>
                 </div>
                 <div class="form-group">
-                  <label for="fullname">Phone</label>
-                  <input
-                    id="phone"
-                    placeholder="phone"
-                    type="text"
-                    name="phone"
-                    required="required"
-                  />
+                  <label for="password">Mật khẩu</label> <input id="password"
+                    placeholder="Password" type="password" name="password"
+                    th:field="*{password}" /> <i class="text-danger"
+                    th:errors="*{password}"></i>
                 </div>
                 <div class="form-group">
-                  <label for="password">Password</label>
-                  <input
-                    id="password"
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    required="required"
-                  />
+                  <label for="password">Xác nhận mật khẩu</label> <input
+                    id="confirmPassword" placeholder="Confirm Password"
+                    type="password" name="confirmPassword" />
+                  <c:if test="${not empty errorp}">
+                    <div class="form-text text-danger">[[${errorp}]]</div>
+                  </c:if>
                 </div>
+  
                 <div class="form-group">
-                  <label for="password">Confirm Password</label>
-                  <input
-                    id="confirmPassword"
-                    placeholder="Confirm Password"
-                    type="password"
-                    name="confirmPassword"
-                    required="required"
-                  />
+                  <button type="submit">Đăng ký</button>
                 </div>
-
-                <!-- <div class="form-group">
-								<label for="password">Email</label> <input id="password" placeholder="Email"
-									type="email" name="email" required="required" />
-							</div> -->
-
-                <div class="form-group">
-                  <button type="submit">Register</button>
-                </div>
+  
               </form>
             </div>
           </div>
-        </div>
       </div>
     </div>
+  
   </body>
 </html>

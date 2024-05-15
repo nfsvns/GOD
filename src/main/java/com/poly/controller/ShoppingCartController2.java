@@ -16,7 +16,7 @@ public class ShoppingCartController2 {
 
 	@RequestMapping("/cart.html")
 	public String list(Model model) {
-		return "cart";
+		return "cart.html";
 	}
 
 }

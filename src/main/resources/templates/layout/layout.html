@@ -30,7 +30,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="/image/logo.png"
+      href="assets/image/logo.png"
       class="img-fluid rounded"
     />
 
@@ -165,7 +165,7 @@
                 <!-- <img th:src="@{../../images/logowebsite.jpg}"
 								alt="Image placeholder" class="img-fluid rounded"
 								style="width: 40%; height: 10%"> -->
-                <h1>𝔊𝔬𝔡 𝔉𝔞𝔱𝔥𝔢𝔯</h1>
+                <h1 class="be-vietnam text-uppercase" style="font-size: 100%;">The Godfather Group</h1>
               </div>
             </div>
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
@@ -280,12 +280,12 @@
                       </ul>
                     </div>
                   </li>
-
-                  <li class="d-inline-block d-md-none ml-md-0">
+          
+                  <!-- <li class="d-inline-block d-md-none ml-md-0">
                     <a href="#" class="site-menu-toggle js-menu-toggle"
                       ><span class="icon-menu"></span
                     ></a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </div>
@@ -293,89 +293,43 @@
         </div>
       </div>
 
-      <nav
-        class="site-navigation mt-4 mb-3 text-right text-md-center be-vietnam"
-        role="navigation"
-      >
-        <div class="container">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav"></div>
-          <ul class="site-menu js-clone-nav d-none d-md-block">
-            <li>
-              <a
-                href="/index.html"
-                th:text="#{nav.home}"
-                style="font-size: 120%"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="/about.html"
-                th:text="#{nav.about}"
-                style="font-size: 120%"
-                >About</a
-              >
-            </li>
-            <li class="has-children">
-              <a href="/shop.html" th:text="#{nav.shop}" style="font-size: 120%"
-                >Shop</a
-              >
-              <ul class="dropdown">
-                <li th:each="result : ${results}" th:if="${result[2]}">
-                  <a
-                    th:href="@{'/shop.html/searchBrand?brand=' + ${result[0]}}"
-                    th:text="${result[0]}"
-                  ></a>
-                </li>
-              </ul>
-            </li>
-
-            <li th:unless="${#request.remoteUser}" class="has-children">
-              <a href="/login" th:text="#{nav.login}">Login</a>
-              <ul class="dropdown">
-                <li>
-                  <a href="/register.html" th:text="#{nav.register}"
-                    >Register</a
-                  >
-                </li>
-              </ul>
-            </li>
-
-            <!--<li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}"
-							class="has-children"><a href="/account.html">Admin</a>
+      <nav class="site-navigation mt-4 mb-3 text-right text-md-center"
+			role="navigation">
+			<div class="container">
+				<!-- Button for small screens -->
+				<button class="navbar-toggler custom-menu-toggler d-md-none"
+					type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span><i class="fa-solid fa-bars fa-beat fa-xl"
+						style="color: #050505;"></i></span>
+				</button>
+				<!-- Navigation menu for larger screens -->
+				<div class="collapse navbar-collapse d-md-block" id="navbarNav">
+					<ul class="site-menu js-clone-nav">
+						<li><a href="/index.html" th:text="#{nav.home}">Home</a></li>
+						<li><a href="/about.html" th:text="#{nav.about}">About</a></li>
+						<li class="has-children"><a href="/shop.html"
+							th:text="#{nav.shop}">Shop</a>
 							<ul class="dropdown">
-								<li><a href="/history">History</a></li>
-								<li><a href="/revenue">Doanh thu năm</a></li>
-								<li><a href="/account.html">Account</a></li>
-								<li><a href="/orderDetail">OrderDetail</a></li>
-								<li><a href="/productAdmin">Product</a></li>
-								<li><a href="/categoryAdmin">Category</a></li>
-								<li><a href="/report">Report</a></li>
-							</ul>
-						</li>-->
-
-            <!-- <th:block th:with="showVietnamese=${false}">
-							<li th:if="${lang != 'en' && showVietnamese == true}"><a
-								href="?lang=vi" th:attr="onclick='|${showVietnamese} = false|'">Tiếng
-									Việt</a></li>
-							<li th:if="${lang != 'vi' && showVietnamese == false}"><a
-								href="?lang=en" th:attr="onclick='|${showVietnamese} = true|'">English</a>
-							</li>
-						</th:block> -->
-          </ul>
-        </div>
-      </nav>
+								<li th:each="result : ${results}" th:if="${result[2]}"><a
+									th:href="@{'/shop.html/searchBrand?brand=' + ${result[0]}}"
+									th:text="${result[0]}"></a></li>
+							</ul></li>
+              <li th:unless="${#request.remoteUser}" class="has-children">
+                <a href="/login" th:text="#{nav.login}">Login</a>
+                <ul class="dropdown">
+                  <li>
+                    <a href="/register.html" th:text="#{nav.register}"
+                      >Register</a
+                    >
+                  </li>
+                </ul>
+              </li>
+					</ul>
+				</div>
+			</div>
+		</nav>
     </header>
 
     <main th:replace="${view}"></main>
@@ -393,10 +347,10 @@
       <div class="container mt-4">
         <div class="row">
           <div class="col-md-4">
-            <h4 class="font-weight-bold text-uppercase mt-3 mb-2">
-              𝔊𝔬𝔡 𝔉𝔞𝔱𝔥𝔢𝔯
+            <h4 class="font-weight-bold text-uppercase mt-3 mb-2 be-vietnam" style="font-size: 80%">
+              The Godfather Group
             </h4>
-            <span style="color: rgb(104, 104, 104); font-size: large"
+            <span style="color: rgb(104, 104, 104); font-size: 80%"
               ><i class="fa-solid fa-envelope p-2 px-2" style="left: -1px"></i>
               thegodfathervietnamfanpage@gmail.com<br />
               <i class="fa-solid fa-phone p-2 px-2"></i>0922128168 <br />
@@ -405,12 +359,12 @@
             </span>
           </div>
           <div class="col-md-4 px-1" align="center">
-            <h5 class="font-weight-bold text-uppercase mt-3 mb-2">
+            <h5 class="font-weight-bold text-uppercase mt-3 mb-2 " style="font-size: 80%;">
               THÔNG TIN LIÊN HỆ
             </h5>
             <span
               class="mt-1"
-              style="color: rgb(104, 104, 104); font-size: large"
+              style="color: rgb(104, 104, 104); font-size: 80%"
               >Theo dõi chúng tôi</span
             >
             <ul class="list-inline mt-2">
@@ -440,8 +394,8 @@
           </div>
           <div class="col-md-4" align="end">
             <h5
-              class="font-weight-bold text-uppercase mt-3 mb-2"
-              style="padding-right: 5%"
+              class="font-weight-bold text-uppercase mt-3 mb-2 "
+              style="font-size:80%;padding-right: 28%;"
             >
               TRANG CỦA CHÚNG TÔI
             </h5>
@@ -463,20 +417,11 @@
         style="background-color: #0000"
       >
         © 2021
-        <a href="/" class="text-decoration-none" style="color: black"
-          >GodFather</a
+        <a href="/" class="text-decoration-none be-vietnam" style="color: black"
+          >The Godfather Group</a
         >
       </div>
-
-      <div class="fb-customerchat" page_id="164141413451458"></div>
-
-      <button
-        id="scrollToTopBtn"
-        onclick="scrollToTop()"
-        style="width: 50px; height: 50px"
-      >
-        <h4 style="text-align: center">^</h4>
-      </button>
+      <!--  -->
     </footer>
 
     <script
@@ -505,27 +450,6 @@
     <script type="text/javascript" src="../../static/js/img-zoom.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <script>
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "1784956665094089",
-          xfbml: true,
-          version: "v2.6",
-        });
-      };
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "facebook-jssdk");
-    </script>
 
     <script>
       $(document).ready(function () {

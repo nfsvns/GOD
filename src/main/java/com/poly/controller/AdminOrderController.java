@@ -25,7 +25,7 @@ public class AdminOrderController {
 	public String index(Model model, @ModelAttribute("orderItem") Order order) {
 		model.addAttribute("orderItems", orderDAO.findAllOrderByCreateDateDesc());
 
-		return "orderAdmin";
+		return "orderAdmin.html";
 	}
 
 }

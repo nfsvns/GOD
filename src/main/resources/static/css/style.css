@@ -1,4 +1,37 @@
 /* CSS */
+tr.total-row {
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+tr.total-row td {
+  font-size: 16px;
+  text-align: right;
+}
+
+tr.total-row .text-black.font-weight-bold {
+  /* Styles for the "Tổng đơn hàng" cell */
+  color: #333;
+  text-align: left; /* Adjust if needed */
+}
+
+/* Optional: Style the cell with name="initialPrice" */
+tr.total-row td[name="initialPrice"] {
+  color: #007bff; /* Example blue color */
+}
+tr.total-row input {
+  width: 100px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+tr.total-row input.text-danger {
+  border-color: #dc3545; /* Red border for discounted price */
+}
+
+tr.total-row input[readonly] {
+  background-color: #eee; /* Gray background for readonly input */
+}
+
 .button-39 {
   background-color: #ffffff;
   border: 1px solid rgb(209, 213, 219);
@@ -683,12 +716,56 @@ a {
 
 .site-section {
   padding: 2.5em 0;
+  width: 40%;
+  margin-left: 34%;
+}
+.site-section1 {
+  padding: 2.5em 0;
+}
+/* Định dạng cho màn hình nhỏ */
+@media screen and (max-width: 768px) {
+  /* Điều chỉnh các phần tử cho thiết bị có kích thước màn hình nhỏ hơn */
+  .product-thumbnail img {
+    width: 80px; /* Điều chỉnh kích thước hình ảnh */
+  }
+
+  .product-size input {
+    width: 70%; /* Điều chỉnh kích thước input cho kích thước màn hình nhỏ hơn */
+  }
+
+  .product-quantity input {
+    width: 40px; /* Điều chỉnh kích thước input cho kích thước màn hình nhỏ hơn */
+  }
 }
 
-@media (min-width: 768px) {
+/* Định dạng cho màn hình lớn hơn 600px */
+@media only screen and (min-width: 600px) {
+  /* Thêm CSS của bạn ở đây */
+}
+
+@media screen and (max-width: 768px) {
   .site-section {
     padding: 5em 0;
+    width: 100%;
+    margin-left: 0%;
   }
+  .form-panel {
+    width: 100%;
+  }
+  .form-group{
+    width: 100%;
+    padding: 0px;
+  }
+  .form-toggle{
+    width: 100%;
+  }
+  .form-header{
+    width: 100%;
+  }
+  .form-content{
+    width: 100%;
+  }
+  
 }
 
 .site-section-heading {
